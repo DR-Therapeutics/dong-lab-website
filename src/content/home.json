@@ -1,0 +1,62 @@
+{
+  "labName": "Dong Lab",
+  "pageTitle": "Dong Lab | Prostate Cancer Research & Drug Discovery",
+  "description": "The Dong Lab at the Vancouver Prostate Centre studies RNA biology and treatment resistance in prostate cancer to guide the discovery of new therapeutic strategies.",
+  "hero": {
+    "eyebrow": "PROSTATE CANCER RESEARCH · VANCOUVER, CANADA",
+    "title": "Understanding resistance.",
+    "accent": "Advancing discovery.",
+    "text": "We study how cancer cells adapt to treatment—and how that knowledge can guide new therapeutic strategies.",
+    "image": "images/ai-drug-discovery.png",
+    "imageAlt": "Conceptual illustration of molecular drug discovery, showing a computer, protein structures and a small molecule."
+  },
+  "about": {
+    "label": "THE DONG LAB",
+    "title": "From molecular questions to new possibilities.",
+    "text": "Led by Dr. Xuesen Dong, our laboratory at the Vancouver Prostate Centre investigates the mechanisms that drive treatment resistance in prostate cancer. We bring together RNA biology, cancer research and computer-aided drug discovery to identify new ways to understand and target resistant disease.",
+    "affiliation": "Vancouver Prostate Centre · Department of Urologic Sciences · The University of British Columbia"
+  },
+  "research": {
+    "label": "OUR RESEARCH",
+    "title": "Three connected directions.",
+    "intro": "Understanding cancer at the molecular level helps us ask better questions about detection and treatment.",
+    "areas": [
+      {
+        "number": "01",
+        "title": "RNA biology & treatment resistance",
+        "text": "We investigate how RNA-binding proteins and RNA regulation influence prostate cancer progression and the ability of tumour cells to adapt to therapy.",
+        "detail": "RNA regulation · Cancer progression"
+      },
+      {
+        "number": "02",
+        "title": "Computer-aided drug discovery",
+        "text": "We connect computational approaches with experimental research to identify and study compounds that target cancer-associated molecular processes.",
+        "detail": "Molecular targets · Therapeutic discovery"
+      },
+      {
+        "number": "03",
+        "title": "Biomarkers & disease insight",
+        "text": "We explore RNA-based biomarkers, including circular RNAs, to better understand prostate cancer and investigate opportunities for diagnosis.",
+        "detail": "Circular RNA · Biomarker research"
+      }
+    ]
+  },
+  "approach": {
+    "label": "OUR APPROACH",
+    "title": "Discovery begins with a question.",
+    "text": "Why do tumours become resistant to treatment? Which molecular processes can we target? We investigate these questions by connecting computational analysis with laboratory experiments.",
+    "image": "images/experimental-validation.png",
+    "imageAlt": "Conceptual research illustration of a pipette, a culture dish and molecular structures.",
+    "steps": ["Understand the biology", "Identify a molecular opportunity", "Test the hypothesis"]
+  },
+  "contact": {
+    "label": "CONNECT WITH US",
+    "title": "Let's move discovery forward.",
+    "text": "Interested in our research, collaboration or training? Contact Dr. Xuesen Dong to start a conversation.",
+    "name": "Dr. Xuesen Dong",
+    "role": "Professor, UBC · Senior Scientist, Vancouver Prostate Centre",
+    "email": "xdong@prostatecentre.com",
+    "location": "Vancouver, British Columbia, Canada",
+    "profileUrl": "https://www.vchri.ca/researchers/xuesen-dong"
+  }
+}
