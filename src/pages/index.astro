@@ -32,8 +32,8 @@ const canonical = new URL(base, Astro.site || Astro.url.origin).href;
           <span class="brand-name">DONG LAB<span>Vancouver Prostate Centre</span></span>
         </a>
         <nav aria-label="Main navigation">
-          <a href="#about">About</a>
           <a href="#research">Research</a>
+          <a href={asset('members/')}>Members</a>
           <a href="#contact">Contact <span aria-hidden="true">↗</span></a>
         </nav>
       </div>
