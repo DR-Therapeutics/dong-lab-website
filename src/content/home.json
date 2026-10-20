@@ -1,14 +1,13 @@
 {
   "labName": "Dong Lab",
-  "pageTitle": "Dong Lab | Prostate Cancer Research & Drug Discovery",
-  "description": "The Dong Lab at the Vancouver Prostate Centre studies RNA biology and treatment resistance in prostate cancer to guide the discovery of new therapeutic strategies.",
+  "pageTitle": "Dong Lab | Cancer Research & Drug Discovery",
+  "description": "The Dong Lab at the Vancouver Prostate Centre studies molecular biology and treatment resistance in cancer to guide the discovery of new therapeutic strategies.",
   "hero": {
-    "eyebrow": "PROSTATE CANCER RESEARCH · VANCOUVER, CANADA",
+    "eyebrow": "CANCER RESEARCH · VANCOUVER, CANADA",
     "title": "Understanding cancer.",
     "accent": "Advancing discovery.",
     "text": "We study how cancer cells adapt to treatment—and how that knowledge can guide new therapeutic strategies.",
     "image": "images/ai-drug-discovery.png",
-    "imageAlt": "Conceptual illustration of molecular drug discovery, showing a computer, protein structures and a small molecule."
   },
   "about": {
     "label": "THE DONG LAB",
