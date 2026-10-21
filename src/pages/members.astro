@@ -191,15 +191,33 @@ const groupPhotos = [
     <ul class="members-grid">
       {members.map((person) => (
         <li class="member">
-          <img
-            class="member-photo"
-            src={asset(`images/members/${person.photo}`)}
-            alt={`Portrait of ${person.name}`}
-            width="640"
-            height="800"
-            loading="lazy"
-            decoding="async"
-          />
+          {person.link ? (
+  <a
+    class="member-photo-link"
+    href={person.link}
+    aria-label={`View ${person.name}'s profile`}
+  >
+    <img
+      class="member-photo"
+      src={asset(`images/members/${person.photo}`)}
+      alt={`Portrait of ${person.name}`}
+      width="640"
+      height="800"
+      loading="lazy"
+      decoding="async"
+    />
+  </a>
+) : (
+  <img
+    class="member-photo"
+    src={asset(`images/members/${person.photo}`)}
+    alt={`Portrait of ${person.name}`}
+    width="640"
+    height="800"
+    loading="lazy"
+    decoding="async"
+  />
+)}
 
           <div class="member-copy">
             <h3 class="member-name">
