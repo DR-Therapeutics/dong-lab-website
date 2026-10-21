@@ -13,19 +13,16 @@ const pageTitle = `Our People | ${home.labName}`;
 const description =
   'Meet the principal investigator, lab manager, and PhD students of Dong Lab.';
 
-// Edit names, roles, and photo filenames here.
+// Keep Xuesen Dong first: the first member has a row of their own.
+// Everyone else appears in this order, five per row on desktop.
+// To add someone, upload their photo to public/images/members/ and
+// append another object to this array. Use a full https:// URL or ''.
 const members = [
   {
     name: 'Xuesen Dong',
     role: 'Principal Investigator',
     photo: 'xuesen-dong.jpg',
     link: home.contact.profileUrl,
-  },
-  {
-    name: 'Ning Xie',
-    role: 'Lab Manager',
-    photo: 'ning-xie.jpg',
-    link: '',
   },
   {
     name: 'Victor Matias-Barrios',
@@ -55,6 +52,12 @@ const members = [
     name: 'Degeng Kong',
     role: 'PhD Student',
     photo: 'degeng-kong.jpg',
+    link: '',
+  },
+  {
+    name: 'Ning Xie',
+    role: 'Lab Manager',
+    photo: 'ning-xie.jpg',
     link: '',
   },
 ];
@@ -347,21 +350,17 @@ const groupPhotos = [
     text-align: center;
   }
 
-  /* Xuesen Dong: first row, first column */
-  .members-grid > .member:nth-child(1) {
-    grid-column: 1;
-    grid-row: 1;
+  /* Reserve the whole first row for Xuesen Dong, while keeping his
+     card at the left and exactly as wide as one of the five columns.
+     All remaining members flow automatically from the second row. */
+  .members-grid > .member:first-child {
+    grid-column: 1 / -1;
+    width: calc((100% - 96px) / 5);
+    justify-self: start;
   }
 
-  /* Ning Xie: third row, first column */
-  .members-grid > .member:nth-child(2) {
-    grid-column: 1;
-    grid-row: 3;
-  }
-
-  /* Five students: second row */
-  .members-grid > .member:nth-child(n + 3) {
-    grid-row: 2;
+  .member-photo-link {
+    display: block;
   }
 
   .member-photo {
@@ -393,6 +392,7 @@ const groupPhotos = [
   }
 
   .member-link:focus-visible,
+  .member-photo-link:focus-visible,
   .group-photo-link:focus-visible {
     outline: 2px solid currentColor;
     outline-offset: 5px;
@@ -446,9 +446,9 @@ const groupPhotos = [
       max-width: 424px;
     }
 
-    .members-grid > .member:nth-child(n) {
-      grid-column: auto;
-      grid-row: auto;
+    /* Keep the first card the same width as one tablet column. */
+    .members-grid > .member:first-child {
+      width: calc((100% - 24px) / 2);
     }
   }
 
@@ -473,6 +473,10 @@ const groupPhotos = [
     .members-grid {
       grid-template-columns: 1fr;
       max-width: 200px;
+    }
+
+    .members-grid > .member:first-child {
+      width: 100%;
     }
 
     .group-gallery {
