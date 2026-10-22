@@ -1,0 +1,228 @@
+---
+// Reuse this header on every page so the desktop and mobile menus match.
+interface Props {
+  currentPage?: 'home' | 'members' | 'publications';
+}
+
+const { currentPage = 'home' } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
+---
+
+<header class="site-header" data-dong-header>
+  <div class="container header-inner dong-header-inner">
+    <a class="brand" href={base} aria-label="Dong Lab home">
+      <span class="brand-mark" aria-hidden="true">d<span>.</span></span>
+      <span class="brand-name">DONG LAB<span>Vancouver Prostate Centre</span></span>
+    </a>
+
+    <nav class="dong-navigation" aria-label="Main navigation">
+      <button
+        class="dong-menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="dong-primary-menu"
+        aria-label="Open navigation menu"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+        </svg>
+        <span>Menu</span>
+      </button>
+
+      <ul class="dong-menu" id="dong-primary-menu">
+        <li><a href={`${base}#research`}>Research</a></li>
+        <li><a href={`${base}members/`} aria-current={currentPage === 'members' ? 'page' : undefined}>Members</a></li>
+        <li><a href={`${base}publications/`} aria-current={currentPage === 'publications' ? 'page' : undefined}>Publications</a></li>
+      </ul>
+
+      <a class="dong-contact" href={`${base}#contact`}>
+        Contact <span aria-hidden="true">↗</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  function initializeDongHeaders() {
+    document.querySelectorAll<HTMLElement>('[data-dong-header]').forEach((header) => {
+      if (header.dataset.menuReady === 'true') return;
+
+      const button = header.querySelector<HTMLButtonElement>('.dong-menu-toggle');
+      const menu = header.querySelector<HTMLUListElement>('.dong-menu');
+      if (!button || !menu) return;
+
+      function setOpen(open: boolean) {
+        header.dataset.menuOpen = String(open);
+        button!.setAttribute('aria-expanded', String(open));
+        button!.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+      }
+
+      button.addEventListener('click', () => {
+        setOpen(button.getAttribute('aria-expanded') !== 'true');
+      });
+
+      menu.addEventListener('click', (event) => {
+        if (event.target instanceof Element && event.target.closest('a')) setOpen(false);
+      });
+
+      header.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && button.getAttribute('aria-expanded') === 'true') {
+          setOpen(false);
+          button.focus();
+        }
+      });
+
+      // Close when focus leaves the header or the visitor clicks elsewhere.
+      header.addEventListener('focusout', () => {
+        requestAnimationFrame(() => {
+          if (!header.contains(document.activeElement)) setOpen(false);
+        });
+      });
+      document.addEventListener('click', (event) => {
+        if (event.target instanceof Node && !header.contains(event.target)) setOpen(false);
+      });
+      window.matchMedia('(max-width: 760px)').addEventListener('change', () => setOpen(false));
+
+      setOpen(false);
+      header.dataset.menuReady = 'true';
+    });
+  }
+
+  initializeDongHeaders();
+  document.addEventListener('astro:page-load', initializeDongHeaders);
+</script>
+
+<style>
+  .site-header[data-dong-header] {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #fff;
+    color: #08253f;
+    border-bottom: 1px solid rgba(8, 37, 63, 0.1);
+  }
+
+  .site-header .dong-header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    min-height: 92px;
+    gap: 24px;
+    padding-block: 14px;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 12px;
+    color: #08253f;
+    text-decoration: none;
+  }
+
+  .brand-mark { font-family: Georgia, serif; font-size: 3.625rem; font-weight: 400; line-height: 0.8; }
+  .brand-mark > span { color: var(--accent, #a74c37); }
+  .brand-name { font-size: 1.1rem; font-weight: 700; letter-spacing: 0.12em; line-height: 1.5; }
+  .brand-name > span { display: block; font-size: 0.625rem; font-weight: 400; letter-spacing: 0.035em; }
+
+  .site-header .dong-navigation {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 26px;
+  }
+
+  .dong-menu {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .dong-menu li { margin: 0; padding: 0; }
+  .dong-menu a {
+    display: block;
+    padding: 12px 0;
+    color: #08253f;
+    font-size: 0.87rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .dong-menu a:hover,
+  .dong-menu a[aria-current="page"] {
+    text-decoration: underline;
+    text-underline-offset: 7px;
+    text-decoration-thickness: 2px;
+  }
+
+  .dong-contact,
+  .dong-menu-toggle {
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 10px 17px;
+    border: 1px solid #08253f;
+    border-radius: 3px;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .site-header .dong-contact { display: inline-flex; color: #fff; background: #08253f; }
+  .dong-contact:hover { background: #174261; }
+  .dong-menu-toggle { display: none; color: #08253f; background: #fff; }
+  .dong-menu-toggle:hover { background: #f0f5f7; }
+  .dong-menu-toggle svg { flex: none; }
+  a:focus-visible,
+  button:focus-visible { outline: 3px solid #397d9e; outline-offset: 4px; }
+
+  @media (max-width: 760px) {
+    .site-header .dong-header-inner { min-height: 72px; gap: 10px; padding-block: 12px; }
+    .brand { gap: 7px; }
+    .brand-mark { font-size: 2.1rem; }
+    .brand-name { font-size: 0.74rem; letter-spacing: 0.08em; }
+    .brand-name > span { display: none; }
+    .site-header .dong-navigation { gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+    .dong-contact,
+    .dong-menu-toggle { padding: 10px 11px; gap: 6px; font-size: 0.8rem; }
+
+    /* Without JavaScript, the links remain visible and usable. */
+    .dong-menu { flex-wrap: wrap; justify-content: flex-end; gap: 12px; }
+
+    .site-header[data-menu-ready="true"] .dong-menu-toggle { display: inline-flex; }
+    .site-header[data-menu-ready="true"] .dong-menu {
+      position: absolute;
+      top: calc(100% + 12px);
+      right: 0;
+      display: none;
+      align-items: stretch;
+      width: min(260px, calc(100vw - 32px));
+      padding: 12px;
+      border: 1px solid rgba(8, 37, 63, 0.15);
+      border-radius: 4px;
+      background: #fff;
+      box-shadow: 0 12px 30px rgba(8, 37, 63, 0.12);
+      gap: 0;
+    }
+    .site-header[data-menu-ready="true"][data-menu-open="true"] .dong-menu { display: flex; flex-direction: column; }
+    .site-header[data-menu-ready="true"] .dong-menu a { padding: 14px 12px; }
+    .site-header[data-menu-ready="true"] .dong-menu a:hover { background: #f0f5f7; }
+  }
+
+  @media (max-width: 360px) {
+    .brand-mark { font-size: 1.8rem; }
+    .brand-name { font-size: 0.67rem; }
+    .dong-contact,
+    .dong-menu-toggle { padding-inline: 9px; }
+  }
+</style>
