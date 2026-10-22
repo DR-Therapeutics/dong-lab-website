@@ -1,0 +1,152 @@
+---
+// Standalone D&R Therapeutics page. No extra packages are required.
+// Update the visible wording, team and contact links below as needed.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
+const asset = (path: string) => base + 'venture/' + path.replace(/^\//, '');
+const canonical = new URL(base + 'venture/', Astro.site || Astro.url.origin).href;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f8fc">
+  <meta name="description" content="D&R Therapeutics develops small-molecule cancer drug candidates targeting TOP2 through AI-guided design and preclinical research. Explore our science, team and partnership opportunities.">
+  <meta property="og:title" content="D&R Therapeutics — Designing a new generation of cancer drugs">
+  <meta property="og:description" content="Small-molecule drug discovery. A focused TOP2 program. Opportunities to advance the science together.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content={canonical}>
+  <link rel="canonical" href={canonical}>
+  <meta property="og:image" content={new URL(asset('assets/molecular-discovery.webp'), Astro.site || Astro.url.origin).href}>
+  <meta property="og:image:alt" content="Conceptual illustration of computer-guided molecular discovery">
+  <link rel="icon" href={asset('assets/dr-logo.png')} type="image/png">
+  <link rel="stylesheet" href={asset('styles.css?v=20261022c')}>
+  <title>D&R Therapeutics | Small-molecule cancer drug discovery</title>
+</head>
+<body class="dr-page">
+  <a class="dr-skip" href="#main">Skip to content</a>
+  <header class="dr-header" data-dr-header>
+    <div class="dr-wrap dr-header-inner">
+      <a class="dr-brand" href="#top" aria-label="D&R Therapeutics home"><img src={asset('assets/dr-logo.png')} width="2048" height="704" alt="D&R Therapeutics"></a>
+      <nav class="dr-nav" aria-label="Main navigation">
+        <button class="dr-menu-toggle" type="button" aria-label="Menu" aria-controls="dr-menu" aria-expanded="false"><span class="dr-menu-icon" aria-hidden="true"></span><span>Menu</span></button>
+        <ul class="dr-menu" id="dr-menu">
+          <li><a href="#program">Our science</a></li>
+          <li><a href="#approach">Our approach</a></li>
+          <li><a href="#partnerships">Partnerships</a></li>
+          <li><a href="#team">Team</a></li>
+        </ul>
+        <a class="dr-header-contact" href="#contact">Contact <span aria-hidden="true">↗</span></a>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <section class="dr-hero" id="top" aria-labelledby="dr-hero-title">
+      <div class="dr-hero-media" aria-hidden="true">
+        <img class="dr-hero-poster" src={asset('assets/discovery-poster.jpg')} alt="" width="1280" height="720" fetchpriority="high">
+        <video class="dr-hero-video" data-dr-video data-src={asset('assets/discovery-loop.mp4')} muted loop playsinline preload="none" tabindex="-1"></video>
+      </div>
+      <div class="dr-hero-shade" aria-hidden="true"></div>
+      <div class="dr-wrap dr-hero-inner">
+        <div class="dr-hero-copy">
+          <p class="dr-pill"><span aria-hidden="true"></span> PRECLINICAL CANCER DRUG DISCOVERY</p>
+          <h1 id="dr-hero-title">Designing a new generation of <span>cancer drugs.</span></h1>
+          <p class="dr-hero-description">We develop small-molecule drugs that target <strong>TOP2</strong>, a protein that helps cancer cells divide. Our team combines AI-guided design with laboratory testing to identify and improve new drug candidates.</p>
+          <div class="dr-hero-actions">
+            <a class="dr-button dr-button-primary" href="#approach">Explore our approach <span aria-hidden="true">↗</span></a>
+            <a class="dr-text-link" href="#partnerships">Partner with us <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="dr-wrap dr-hero-bottom"><p>Conceptual research animation</p><button class="dr-motion" type="button" data-dr-motion hidden><span data-dr-motion-icon aria-hidden="true">Ⅱ</span><span data-dr-motion-label>Pause motion</span></button></div>
+    </section>
+    <div class="dr-facts-strip">
+      <div class="dr-wrap">
+        <dl class="dr-facts">
+          <div><dt>What we develop</dt><dd>Small-molecule drugs</dd></div>
+          <div><dt>Our therapeutic focus</dt><dd>Cancer</dd></div>
+          <div><dt>Where we are today</dt><dd><span class="dr-inline-dot" aria-hidden="true"></span> Lead candidates · Preclinical</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <section class="dr-section dr-program" id="program" aria-labelledby="dr-program-title">
+      <div class="dr-wrap dr-program-grid">
+        <div class="dr-program-intro">
+          <p class="dr-eyebrow">OUR SCIENCE</p>
+          <h2 id="dr-program-title">An important cancer target.<br><span>A different way to inhibit it.</span></h2>
+          <p class="dr-section-intro">Our lead program focuses on topoisomerase II, or TOP2. We are developing small molecules designed to interfere with how this protein works.</p>
+          <a class="dr-research-link" href="https://doi.org/10.3390/cancers13153675" target="_blank" rel="noopener noreferrer"><span>Explore the research background<small>Cancers · 2021 · Published study</small></span><span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="dr-program-details">
+          <article class="dr-explainer"><span class="dr-explainer-number" aria-hidden="true">01</span><div><h3>What does TOP2 do?</h3><p>TOP2 helps cells manage and untangle their DNA during cell division. Blocking this activity can interfere with cancer cell growth.</p></div></article>
+          <article class="dr-explainer"><span class="dr-explainer-number" aria-hidden="true">02</span><div><h3>What are we developing?</h3><p>Small molecules designed to prevent TOP2 from interacting with DNA. This approach is known as <strong>catalytic inhibition</strong>.</p></div></article>
+          <article class="dr-explainer"><span class="dr-explainer-number" aria-hidden="true">03</span><div><h3>What is the goal?</h3><p>Strong anticancer activity, with the aim of reducing the DNA damage associated with conventional TOP2-targeting chemotherapy.</p></div></article>
+          <div class="dr-stage-note"><span class="dr-stage-icon" aria-hidden="true">↗</span><div><strong>Our current focus: preclinical development</strong><p>We are evaluating activity, mechanism and drug-like properties. Effectiveness and safety in patients have not yet been established.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dr-section dr-approach" id="approach" aria-labelledby="dr-approach-title">
+      <div class="dr-wrap">
+        <div class="dr-section-heading dr-approach-heading"><div><p class="dr-eyebrow">OUR APPROACH</p><h2 id="dr-approach-title">From AI design<br>to animal studies.</h2></div><p>We begin with more than 1 billion chemical compounds, then move promising candidates through cell models and animal studies.</p></div>
+        <div class="dr-start-point"><div class="dr-start-value">&gt;1B</div><div><strong>Chemical compounds</strong><p>Our starting point for AI-guided discovery</p></div><span aria-hidden="true">↓</span></div>
+        <ol class="dr-discovery-steps">
+          <li>
+            <img src={asset('assets/approach-ai-design.webp')} width="1200" height="675" loading="lazy" decoding="async" alt="Conceptual illustration of a laptop displaying a DNA strand beside a molecular structure.">
+            <div class="dr-discovery-copy"><span class="dr-discovery-number">01 / DESIGN</span><h3>AI-guided drug design</h3><p>Use AI-guided computational methods to prioritize promising compounds and refine their molecular structures.</p></div>
+          </li>
+          <li>
+            <img src={asset('assets/approach-cell-study.webp')} width="1200" height="676" loading="lazy" decoding="async" alt="Conceptual illustration of a pipette dispensing liquid into a culture dish for cell-model research.">
+            <div class="dr-discovery-copy"><span class="dr-discovery-number">02 / TEST IN CELLS</span><h3>Cell model studies</h3><p>Test anticancer activity in cell models and investigate how each candidate works.</p></div>
+          </li>
+          <li>
+            <img src={asset('assets/approach-animal-study.webp')} width="1200" height="675" loading="lazy" decoding="async" alt="Conceptual illustration of a laboratory mouse beside a drug vial, representing preclinical animal studies.">
+            <div class="dr-discovery-copy"><span class="dr-discovery-number">03 / TEST IN ANIMALS</span><h3>Animal model studies</h3><p>Evaluate lead candidates in animal models to assess antitumor activity and guide further development.</p></div>
+          </li>
+        </ol>
+        <p class="dr-image-note">Images are conceptual research illustrations.</p>
+        <div class="dr-lead-result">
+          <div class="dr-lead-copy"><p class="dr-eyebrow">WHERE WE ARE TODAY</p><h3>Lead candidate compounds identified.</h3><p>Our discovery process has produced lead candidates with encouraging results in preclinical animal studies.</p></div>
+          <!-- The efficacy figure below is supplied by the D&R team. Use the precise study endpoint when available; do not relabel it as tumor growth inhibition or tumor shrinkage without supporting data. -->
+          <div class="dr-efficacy"><strong>&gt;80<span>%</span></strong><p>Efficacy in animal models<sup>*</sup></p></div>
+          <p class="dr-result-note">*Preclinical result reported by D&R Therapeutics. Clinical efficacy has not been established.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="dr-section dr-partnerships" id="partnerships" aria-labelledby="dr-partnerships-title">
+      <div class="dr-wrap dr-partnership-invite">
+        <p class="dr-eyebrow">PARTNER WITH D&R</p>
+        <h2 id="dr-partnerships-title">Partnership Opportunities</h2>
+        <p class="dr-partnership-copy">We are seeking strategic partners to co-develop our lead candidates, explore licensing opportunities for specific combination programs, and collaborate on integrating our compounds with targeted therapies.</p>
+        <a class="dr-button dr-button-primary" href="mailto:xdong@prostatecentre.com?subject=D%26R%20Therapeutics%20%E2%80%94%20Partnership%20enquiry">Discuss a partnership <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+
+    <section class="dr-section dr-team" id="team" aria-labelledby="dr-team-title">
+      <div class="dr-wrap">
+        <div class="dr-section-heading"><div><p class="dr-eyebrow">THE PEOPLE BEHIND THE PROGRAM</p><h2 id="dr-team-title">Team / Contacts</h2></div><p>Based in Vancouver, our research team connects cancer biology with small-molecule drug discovery.</p></div>
+        <div class="dr-team-contact-grid">
+          <div class="dr-team-list">
+            <article class="dr-person"><span class="dr-person-initials" aria-hidden="true">XD</span><div><h3><a href="https://www.vchri.ca/researchers/xuesen-dong" target="_blank" rel="noopener noreferrer">Xuesen Dong <span aria-hidden="true">↗</span></a></h3><p>Professor, University of British Columbia</p><span>Scientific & partnership enquiries</span></div></article>
+            <article class="dr-person"><span class="dr-person-initials" aria-hidden="true">ZH</span><div><h3><a href="https://vinkey.com/" target="_blank" rel="noopener noreferrer">Zechao Huang <span aria-hidden="true">↗</span></a></h3><p>PhD researcher</p></div></article>
+            <article class="dr-person"><span class="dr-person-initials" aria-hidden="true">QJ</span><div><h3><a href="https://dong-lab.ca/members/" target="_blank" rel="noopener noreferrer">Qiongqiong Jia <span aria-hidden="true">↗</span></a></h3><p>PhD researcher</p></div></article>
+            <a class="dr-lab-link" href="https://dong-lab.ca/members/" target="_blank" rel="noopener noreferrer">Meet the wider Dong Lab research group <span aria-hidden="true">↗</span></a>
+          </div>
+          <aside class="dr-contact-card" id="contact" aria-labelledby="dr-contact-title">
+            <div class="dr-contact-top"><p class="dr-eyebrow">START A CONVERSATION</p><span aria-hidden="true">↗</span></div>
+            <h3 id="dr-contact-title">Have a shared interest?<br>Let’s connect.</h3>
+            <p>Tell us about your interest in co-development, licensing or targeted-therapy collaboration. We would like to hear from you.</p>
+            <address><span>Dr. Xuesen Dong</span><a href="mailto:xdong@prostatecentre.com">xdong@prostatecentre.com</a></address>
+            <a class="dr-button dr-button-white" href="mailto:xdong@prostatecentre.com?subject=D%26R%20Therapeutics%20enquiry">Email our team <span aria-hidden="true">↗</span></a>
+            <span class="dr-contact-location">Vancouver, British Columbia, Canada</span>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="dr-footer"><div class="dr-wrap dr-footer-inner"><a class="dr-brand" href="#top" aria-label="D&R Therapeutics — back to top"><img src={asset('assets/dr-logo.png')} width="2048" height="704" alt="D&R Therapeutics" loading="lazy"></a><p>© <span data-dr-year>2026</span> D&R Therapeutics<br><span>Preclinical cancer drug discovery</span></p><a class="dr-back-top" href="#top">Back to top <span aria-hidden="true">↑</span></a></div></footer>
+  <script is:inline src={asset('script.js?v=20261022c')} defer></script>
+</body>
+</html>
