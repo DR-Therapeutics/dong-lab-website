@@ -121,10 +121,30 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
     text-decoration: none;
   }
 
-  .brand-mark { font-family: Georgia, serif; font-size: 3.625rem; font-weight: 400; line-height: 0.8; }
-  .brand-mark > span { color: var(--accent, #a74c37); }
-  .brand-name { font-size: 1.1rem; font-weight: 700; letter-spacing: 0.12em; line-height: 1.5; }
-  .brand-name > span { display: block; font-size: 0.625rem; font-weight: 400; letter-spacing: 0.035em; }
+  .brand-mark {
+    font-family: Georgia, serif;
+    font-size: 3.625rem;
+    font-weight: 400;
+    line-height: 0.8;
+  }
+
+  .brand-mark > span {
+    color: var(--accent, #a74c37);
+  }
+
+  .brand-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    line-height: 1.5;
+  }
+
+  .brand-name > span {
+    display: block;
+    font-size: 0.625rem;
+    font-weight: 400;
+    letter-spacing: 0.035em;
+  }
 
   .site-header .dong-navigation {
     position: relative;
@@ -142,7 +162,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
     list-style: none;
   }
 
-  .dong-menu li { margin: 0; padding: 0; }
+  .dong-menu li {
+    margin: 0;
+    padding: 0;
+  }
+
   .dong-menu a {
     display: block;
     padding: 12px 0;
@@ -153,6 +177,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
     white-space: nowrap;
   }
 
+  /* Original underline behaviour, preserved for mobile */
   .dong-menu a:hover,
   .dong-menu a[aria-current="page"] {
     text-decoration: underline;
@@ -178,28 +203,114 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
     cursor: pointer;
   }
 
-  .site-header .dong-contact { display: inline-flex; color: #fff; background: #08253f; }
-  .dong-contact:hover { background: #174261; }
-  .dong-menu-toggle { display: none; color: #08253f; background: #fff; }
-  .dong-menu-toggle:hover { background: #f0f5f7; }
-  .dong-menu-toggle svg { flex: none; }
+  .site-header .dong-contact {
+    display: inline-flex;
+    color: #fff;
+    background: #08253f;
+  }
+
+  .dong-contact:hover {
+    background: #174261;
+  }
+
+  .dong-menu-toggle {
+    display: none;
+    color: #08253f;
+    background: #fff;
+  }
+
+  .dong-menu-toggle:hover {
+    background: #f0f5f7;
+  }
+
+  .dong-menu-toggle svg {
+    flex: none;
+  }
+
+  /* Visible focus indicator for keyboard navigation */
   a:focus-visible,
-  button:focus-visible { outline: 3px solid #397d9e; outline-offset: 4px; }
+  button:focus-visible {
+    outline: 3px solid #397d9e;
+    outline-offset: 4px;
+  }
 
+  /* DESKTOP */
+  @media (min-width: 761px) {
+    /* No permanent underlines, including the current page */
+    .site-header .dong-menu a,
+    .site-header .dong-menu a[aria-current="page"],
+    .site-header .dong-contact {
+      text-decoration: none;
+    }
+
+    /* Contact has no background or border */
+    .site-header .dong-contact,
+    .site-header .dong-contact:hover {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      color: #08253f;
+    }
+
+    /* All navigation links underline only on hover */
+    .site-header .dong-menu a:hover,
+    .site-header .dong-menu a[aria-current="page"]:hover,
+    .site-header .dong-contact:hover {
+      text-decoration: underline;
+      text-underline-offset: 7px;
+      text-decoration-thickness: 2px;
+    }
+  }
+
+  /* MOBILE — existing styling preserved */
   @media (max-width: 760px) {
-    .site-header .dong-header-inner { min-height: 72px; gap: 10px; padding-block: 12px; }
-    .brand { gap: 7px; }
-    .brand-mark { font-size: 2.1rem; }
-    .brand-name { font-size: 0.74rem; letter-spacing: 0.08em; }
-    .brand-name > span { display: none; }
-    .site-header .dong-navigation { gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+    .site-header .dong-header-inner {
+      min-height: 72px;
+      gap: 10px;
+      padding-block: 12px;
+    }
+
+    .brand {
+      gap: 7px;
+    }
+
+    .brand-mark {
+      font-size: 2.1rem;
+    }
+
+    .brand-name {
+      font-size: 0.74rem;
+      letter-spacing: 0.08em;
+    }
+
+    .brand-name > span {
+      display: none;
+    }
+
+    .site-header .dong-navigation {
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
     .dong-contact,
-    .dong-menu-toggle { padding: 10px 11px; gap: 6px; font-size: 0.8rem; }
+    .dong-menu-toggle {
+      padding: 10px 11px;
+      gap: 6px;
+      font-size: 0.8rem;
+    }
 
-    /* Without JavaScript, the links remain visible and usable. */
-    .dong-menu { flex-wrap: wrap; justify-content: flex-end; gap: 12px; }
+    /* Without JavaScript, links remain visible */
+    .dong-menu {
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 12px;
+    }
 
-    .site-header[data-menu-ready="true"] .dong-menu-toggle { display: inline-flex; }
+    .site-header[data-menu-ready="true"] .dong-menu-toggle {
+      display: inline-flex;
+    }
+
     .site-header[data-menu-ready="true"] .dong-menu {
       position: absolute;
       top: calc(100% + 12px);
@@ -214,33 +325,34 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
       box-shadow: 0 12px 30px rgba(8, 37, 63, 0.12);
       gap: 0;
     }
-    .site-header[data-menu-ready="true"][data-menu-open="true"] .dong-menu { display: flex; flex-direction: column; }
-    .site-header[data-menu-ready="true"] .dong-menu a { padding: 14px 12px; }
-    .site-header[data-menu-ready="true"] .dong-menu a:hover { background: #f0f5f7; }
+
+    .site-header[data-menu-ready="true"][data-menu-open="true"] .dong-menu {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .site-header[data-menu-ready="true"] .dong-menu a {
+      padding: 14px 12px;
+    }
+
+    .site-header[data-menu-ready="true"] .dong-menu a:hover {
+      background: #f0f5f7;
+    }
   }
 
+  /* SMALL PHONES — existing styling preserved */
   @media (max-width: 360px) {
-    .brand-mark { font-size: 1.8rem; }
-    .brand-name { font-size: 0.67rem; }
+    .brand-mark {
+      font-size: 1.8rem;
+    }
+
+    .brand-name {
+      font-size: 0.67rem;
+    }
+
     .dong-contact,
-    .dong-menu-toggle { padding-inline: 9px; }
+    .dong-menu-toggle {
+      padding-inline: 9px;
+    }
   }
-@media (min-width: 761px) {
-  /* Remove the permanent underline from the current page */
-  .dong-menu a[aria-current="page"] {
-    text-decoration: none;
-  }
-
-  /* Keep the underline when hovering */
-  .dong-menu a:hover {
-    text-decoration: underline;
-  }
-
-  /* Transparent Contact button, including on hover */
-  .site-header .dong-contact,
-  .site-header .dong-contact:hover {
-    background: transparent;
-    color: #08253f;
-  }
-}
 </style>
