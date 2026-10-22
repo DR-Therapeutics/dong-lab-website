@@ -1,5 +1,6 @@
 ---
 import home from '../content/home.json';
+import SiteHeader from '../components/SiteHeader.astro';
 import '../styles/global.css';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
@@ -115,27 +116,8 @@ const groupPhotos = [
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <header class="site-header">
-      <div class="container header-inner">
-        <a class="brand" href={base} aria-label="Dong Lab home">
-          <span class="brand-mark" aria-hidden="true">
-            d<span>.</span>
-          </span>
-          <span class="brand-name">
-            DONG LAB<span>Vancouver Prostate Centre</span>
-          </span>
-        </a>
-
-        <nav aria-label="Main navigation">
-          <a href={`${base}#research`}>Research</a>
-          <a href={asset('members/')} aria-current="page">Members</a>
-          <a href={`${base}#contact`}>
-            Contact <span aria-hidden="true">↗</span>
-          </a>
-        </nav>
-      </div>
-    </header>
-
+    <SiteHeader currentPage="members" />
+    
     <main id="main">
       <section
         class="hero members-hero"
