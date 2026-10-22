@@ -1,0 +1,176 @@
+---
+interface Props {
+  imageSrc?: string;
+  imageAlt?: string;
+  videoSrc?: string;
+}
+
+const {
+  imageSrc = 'images/ai-drug-discovery.png',
+  imageAlt = 'Conceptual research illustration of a laptop, a protein structure, and a glowing molecule.',
+  videoSrc = 'videos/ai-drug-discovery-loop.mp4',
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
+const asset = (path: string) => base + path.replace(/^\//, '');
+---
+
+<div class="dong-hero-motion" data-dong-hero-motion>
+  <img
+    class="hero-image"
+    src={asset(imageSrc)}
+    alt={imageAlt}
+    width="1672"
+    height="941"
+    fetchpriority="high"
+  />
+  <video
+    class="hero-image dong-hero-video"
+    data-video-src={asset(videoSrc)}
+    width="1600"
+    height="900"
+    muted
+    loop
+    playsinline
+    preload="none"
+    aria-hidden="true"
+    tabindex="-1"
+  ></video>
+  <button class="dong-hero-motion-toggle" type="button" hidden>
+    Pause animation
+  </button>
+</div>
+
+<script>
+  function initializeHeroMotion() {
+    document.querySelectorAll<HTMLElement>('[data-dong-hero-motion]').forEach((root) => {
+      if (root.dataset.motionReady === 'true') return;
+      const video = root.querySelector<HTMLVideoElement>('video');
+      const button = root.querySelector<HTMLButtonElement>('button');
+      if (!video || !button) return;
+      root.dataset.motionReady = 'true';
+
+      const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const controller = new AbortController();
+      const { signal } = controller;
+      let pausedByVisitor = false;
+      let inView = true;
+      let unavailable = false;
+
+      const updateButton = () => {
+        button.textContent = video.paused ? 'Play animation' : 'Pause animation';
+      };
+
+      function updatePlayback() {
+        if (signal.aborted || unavailable) return;
+        if (motionPreference.matches) {
+          video!.pause();
+          root.dataset.videoVisible = 'false';
+          button!.hidden = true;
+          return;
+        }
+
+        if (document.hidden || !inView || pausedByVisitor) {
+          video!.pause();
+          return;
+        }
+
+        // Assign the URL only when animation is allowed. The still image is
+        // also the fallback when JavaScript or video playback is unavailable.
+        if (!video!.getAttribute('src')) {
+          video!.src = video!.dataset.videoSrc!;
+        }
+        video!.muted = true;
+        video!.play().catch(() => {
+          if (signal.aborted || motionPreference.matches || unavailable) return;
+          button!.hidden = false;
+          updateButton();
+        });
+      }
+
+      video.addEventListener('playing', () => {
+        if (motionPreference.matches) return;
+        root.dataset.videoVisible = 'true';
+        button.hidden = false;
+        updateButton();
+      }, { signal });
+
+      video.addEventListener('pause', updateButton, { signal });
+      video.addEventListener('error', () => {
+        unavailable = true;
+        root.dataset.videoVisible = 'false';
+        button.hidden = true;
+      }, { signal });
+
+      button.addEventListener('click', () => {
+        pausedByVisitor = !video.paused;
+        updatePlayback();
+      }, { signal });
+
+      motionPreference.addEventListener('change', updatePlayback, { signal });
+      document.addEventListener('visibilitychange', updatePlayback, { signal });
+
+      const observer = new IntersectionObserver(([entry]) => {
+        inView = entry.isIntersecting;
+        updatePlayback();
+      }, { threshold: 0 });
+      observer.observe(root);
+      updatePlayback();
+
+      document.addEventListener('astro:before-swap', () => {
+        controller.abort();
+        observer.disconnect();
+        video.pause();
+      }, { once: true, signal });
+    });
+  }
+
+  initializeHeroMotion();
+  document.addEventListener('astro:page-load', initializeHeroMotion);
+</script>
+
+<style>
+  .dong-hero-motion {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .dong-hero-motion .hero-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .dong-hero-video { opacity: 0; }
+  .dong-hero-motion[data-video-visible="true"] .dong-hero-video { opacity: 1; }
+
+  .dong-hero-motion-toggle {
+    position: absolute;
+    z-index: 5;
+    bottom: 20px;
+    left: 24px;
+    display: inline-flex;
+    align-items: center;
+    min-height: 36px;
+    padding: 8px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 3px;
+    background: rgba(6, 29, 50, 0.82);
+    color: #fff;
+    font: 500 0.6875rem/1.4 Arial, Helvetica, sans-serif;
+    pointer-events: auto;
+    cursor: pointer;
+  }
+
+  .dong-hero-motion-toggle[hidden] { display: none; }
+  .dong-hero-motion-toggle:hover { background: #08253f; }
+  .dong-hero-motion-toggle:focus-visible { outline: 3px solid #f1bea9; outline-offset: 4px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dong-hero-video,
+    .dong-hero-motion-toggle { display: none; }
+  }
+</style>
