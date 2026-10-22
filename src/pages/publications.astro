@@ -8,18 +8,30 @@ const asset = (path: string) => base + path.replace(/^\//, '');
 const pageTitle = `Publications | ${home.labName}`;
 const description = 'Selected research articles and reviews from Dong Lab at the Vancouver Prostate Centre.';
 const canonical = new URL(asset('publications/'), Astro.site || Astro.url.origin).href;
+const pubmedUrl = 'https://pubmed.ncbi.nlm.nih.gov/?term=Xuesen%20Dong&sort=date';
 
 // Upload the banner to public/images/publications-banner.png.
 // Change this filename if you want to use another image later.
 const banner = 'images/publications-banner.png';
 const bannerAlt = 'Conceptual illustration of molecular structures and a pathway toward a patient and a clinician.';
 
-// ADD NEW PUBLICATIONS HERE.
-// Copy one complete object, including its final comma, to the start of this array.
-// Years are grouped automatically, newest first. Within a year, your order is kept.
+interface Publication {
+  year?: number;
+  title: string;
+  authors: string;
+  journal: string;
+  details: string;
+  url: string;
+}
+
+// EDIT YOUR SELECTED PUBLICATIONS HERE.
+// Only papers in this array appear on the page, in exactly the order shown here.
+// To add a paper, copy a complete { ... }, block and edit its information.
+// To remove or reorder a paper, delete or move its complete { ... }, block.
+// The year appears only in the small citation text. Omit year to hide it entirely.
 // Write **words to make bold** in title, authors, journal, or details.
 // Always use a complete https:// address in url. Do not put ** in the URL.
-const publications = [
+const publications: Publication[] = [
   {
     year: 2026,
     title: 'PABPC1 dictates castration sensitivity in prostate cancer via orchestrating ferroptosis resistance and CD8(+) T-cell dysfunction',
@@ -95,7 +107,6 @@ const publications = [
 ];
 
 // Everything below this point renders the list; adding a paper needs no HTML edits.
-const years = [...new Set(publications.map((paper) => paper.year))].sort((a, b) => b - a);
 
 // Only **bold** is supported. Normal text is escaped by Astro, not inserted as HTML.
 const boldParts = (text: string) => text.split(/(\*\*[^*]+\*\*)/g).map((part) => {
@@ -164,38 +175,37 @@ const boldParts = (text: string) => text.split(/(\*\*[^*]+\*\*)/g).map((part) =>
               <p class="eyebrow">OUR PUBLISHED WORK</p>
               <h2 id="selected-title">Selected publications.</h2>
             </div>
-            <p>A selection of research articles and reviews from the Dong Lab.</p>
+            <p>
+              <a class="pubmed-link" href={pubmedUrl}>
+                View all publications on PubMed <span aria-hidden="true">↗</span>
+              </a>
+            </p>
           </div>
 
-          {years.map((year) => (
-            <section class="publication-year" aria-labelledby={`year-${year}`}>
-              <h3 class="publication-year-label" id={`year-${year}`}>{year}</h3>
-              <ul class="publication-list">
-                {publications.filter((paper) => paper.year === year).map((paper) => (
-                  <li>
-                    <article class="publication-entry">
-                      <h4 class="publication-title">
-                        <a href={paper.url}>
-                          {boldParts(paper.title).map((part) => part.bold ? <strong>{part.text}</strong> : part.text)}
-                        </a>
-                      </h4>
-                      <p class="publication-authors">
-                        {boldParts(paper.authors).map((part) => part.bold ? <strong>{part.text}</strong> : part.text)}
-                      </p>
-                      <p class="publication-citation">
-                        <em>{boldParts(paper.journal).map((part) => part.bold ? <strong>{part.text}</strong> : part.text)}</em>
-                        {' · '}{paper.year}{' · '}
-                        {boldParts(paper.details).map((part) => part.bold ? <strong>{part.text}</strong> : part.text)}
-                      </p>
-                      <a class="inline-link publication-read" href={paper.url} aria-label={`Read ${paper.title.replaceAll('**', '')}`}>
-                        Read publication <span aria-hidden="true">↗</span>
-                      </a>
-                    </article>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ))}
+          <ul class="publication-list" role="list">
+            {publications.map((paper) => (
+              <li>
+                <article class="publication-entry">
+                  <h3 class="publication-title">
+                    <a href={paper.url}>
+                      {boldParts(paper.title).map((part) => part.bold ? <strong>{part.text}</strong> : part.text)}
+                    </a>
+                  </h3>
+                  <p class="publication-authors">
+                    {boldParts(paper.authors).map((part) => part.bold ? <strong>{part.text}</strong> : part.text)}
+                  </p>
+                  <p class="publication-citation">
+                    <em>{boldParts(paper.journal).map((part) => part.bold ? <strong>{part.text}</strong> : part.text)}</em>
+                    {paper.year != null ? ` · ${paper.year}` : ''}{' · '}
+                    {boldParts(paper.details).map((part) => part.bold ? <strong>{part.text}</strong> : part.text)}
+                  </p>
+                  <a class="inline-link publication-read" href={paper.url} aria-label={`Read ${paper.title.replaceAll('**', '')}`}>
+                    Read publication <span aria-hidden="true">↗</span>
+                  </a>
+                </article>
+              </li>
+            ))}
+          </ul>
 
           {publications.length === 0 && <p>Our publication list will be available soon.</p>}
         </div>
@@ -232,12 +242,13 @@ const boldParts = (text: string) => text.split(/(\*\*[^*]+\*\*)/g).map((part) =>
   .publications-hero .hero-shade { background: linear-gradient(90deg, rgba(4, 22, 43, 0.83), rgba(4, 22, 43, 0.35) 62%, rgba(4, 22, 43, 0.08)); }
   .publications-section { scroll-margin-top: 110px; }
   .publications-intro { margin-bottom: 48px; }
-  .publication-year { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 48px; border-top: 1px solid rgba(8, 37, 63, 0.18); }
-  .publication-year-label { margin: 0; padding-top: 34px; color: #08253f; font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 500; line-height: 1.2; }
-  .publication-list { list-style: none; margin: 0; padding: 0; }
+  .pubmed-link { color: #08253f; font-size: 0.95rem; font-weight: 600; line-height: 1.7; text-decoration: none; }
+  .pubmed-link span { display: inline-block; margin-left: 6px; }
+  .pubmed-link:hover { text-decoration: underline; text-underline-offset: 5px; }
+  .publication-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid rgba(8, 37, 63, 0.18); }
   .publication-list > li { margin: 0; padding: 0; }
   .publication-list > li + li { border-top: 1px solid rgba(8, 37, 63, 0.12); }
-  .publication-entry { padding-block: 34px 38px; }
+  .publication-entry { max-width: 1040px; padding-block: 34px 38px; }
   .publication-title { margin: 0 0 16px; font-size: clamp(1.25rem, 2.1vw, 1.65rem); font-weight: 500; line-height: 1.45; }
   .publication-title a { color: #08253f; text-decoration: none; }
   .publication-title a:hover { text-decoration: underline; text-underline-offset: 4px; }
@@ -245,14 +256,13 @@ const boldParts = (text: string) => text.split(/(\*\*[^*]+\*\*)/g).map((part) =>
   .publication-citation { margin: 0 0 20px; color: #496276; font-size: 0.95rem; line-height: 1.7; }
   .publication-entry strong { font-weight: 700; color: #08253f; }
   .publication-read { display: inline-flex; align-items: center; gap: 8px; font-size: 0.88rem; }
-  .publication-entry a:focus-visible { outline: 2px solid #397d9e; outline-offset: 5px; }
+  .publication-entry a:focus-visible,
+  .pubmed-link:focus-visible { outline: 2px solid #397d9e; outline-offset: 5px; }
   .publications-contact { padding-block: 64px; }
   .publications-contact h2 { max-width: 750px; }
   .publications-contact p:not(.eyebrow) { max-width: 650px; margin-block: 20px 28px; }
 
   @media (max-width: 760px) {
-    .publication-year { grid-template-columns: 1fr; gap: 0; }
-    .publication-year-label { padding-top: 28px; }
     .publication-entry { padding-block: 24px 30px; }
     .publications-intro { margin-bottom: 32px; }
     .publications-section { scroll-margin-top: 90px; }
