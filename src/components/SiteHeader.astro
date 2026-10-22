@@ -225,4 +225,22 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
     .dong-contact,
     .dong-menu-toggle { padding-inline: 9px; }
   }
+@media (min-width: 761px) {
+  /* Remove the permanent underline from the current page */
+  .dong-menu a[aria-current="page"] {
+    text-decoration: none;
+  }
+
+  /* Keep the underline when hovering */
+  .dong-menu a:hover {
+    text-decoration: underline;
+  }
+
+  /* Transparent Contact button, including on hover */
+  .site-header .dong-contact,
+  .site-header .dong-contact:hover {
+    background: transparent;
+    color: #08253f;
+  }
+}
 </style>
