@@ -42,7 +42,6 @@ const canonical = new URL(base, Astro.site || Astro.url.origin).href;
             <p class="hero-description">{home.hero.text}</p>
             <div class="hero-actions">
               <a class="button button-light" href="#research">Explore our research <span aria-hidden="true">↗</span></a>
-              <a class="text-link" href="#about">About the lab <span aria-hidden="true">↓</span></a>
             </div>
           </div>
           <p class="hero-caption">Conceptual research illustration</p>
@@ -63,7 +62,7 @@ const canonical = new URL(base, Astro.site || Astro.url.origin).href;
           </div>
           <div class="about-copy">
             <p>{home.about.text}</p>
-            <a class="inline-link" href={home.contact.profileUrl}>Meet Dr. Xuesen Dong <span aria-hidden="true">↗</span></a>
+            <a class="inline-link" href="https://dong-lab.ca/#contact">Meet Dr. Xuesen Dong <span aria-hidden="true">↗</span></a>
           </div>
         </div>
       </section>
