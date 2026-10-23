@@ -36,7 +36,7 @@ body { margin: 0; }
 .dr-brand img { width: 100%; }
 .dr-nav { display: flex; align-items: center; gap: 26px; }
 .dr-menu { display: flex; align-items: center; gap: 24px; list-style: none; margin: 0; padding: 0; }
-.dr-menu a { display: block; font-size: 16px; font-weight: 600; padding-block: 14px; white-space: nowrap; }
+.dr-menu a { display: block; font-size: 14px; font-weight: 600; padding-block: 14px; white-space: nowrap; }
 .dr-menu a:hover { color: var(--dr-blue); text-decoration: underline; text-underline-offset: 7px; }
 .dr-header-contact { display: inline-flex; align-items: center; justify-content: center; gap: 14px; min-height: 44px; padding: 12px 19px; background: var(--dr-ink); color: #fff !important; border-radius: 50px; font-size: 15px; font-weight: 600; }
 .dr-header-contact:hover { background: var(--dr-blue); }
@@ -360,4 +360,10 @@ body { margin: 0; }
   html { scroll-behavior: auto; }
   .dr-page *, .dr-page *:before,.dr-page *:after { animation: none !important; transition: none !important; }
   .dr-button:hover { transform: none; }
+}
+.dr-header .dr-menu a[href="https://dong-lab.ca/"],
+.dr-header .dr-menu a[href="https://dong-lab.ca/"]:hover {
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1px;
 }
