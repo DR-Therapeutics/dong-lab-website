@@ -1,0 +1,137 @@
+---
+import home from '../content/home.json';
+import SiteHeader from '../components/SiteHeader.astro';
+import '../styles/global.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
+const asset = (path: string) => base + path.replace(/^\//, '');
+const pageTitle = `Funding | ${home.labName}`;
+const description = 'We gratefully acknowledge the organizations that support research at the Dong Lab.';
+const canonical = new URL(asset('funding/'), Astro.site || Astro.url.origin).href;
+
+// Logo files live in public/images/funders/.
+// To replace a logo, upload a new image using the same filename,
+// or change its image path here. For the funder's website link (url),
+// always use a complete https:// address.
+const funders = [
+  {
+    name: 'Canadian Institutes of Health Research',
+    image: 'images/funders/cihr.jpg',
+    url: 'https://cihr-irsc.gc.ca/',
+  },
+  {
+    name: 'Congressionally Directed Medical Research Programs',
+    image: 'images/funders/cdmrp.png',
+    url: 'https://cdmrp.health.mil/',
+  },
+  {
+    name: 'National Institutes of Health',
+    image: 'images/funders/nih.png',
+    url: 'https://www.nih.gov/',
+  },
+  {
+    name: 'Prostate Cancer Foundation Canada',
+    image: 'images/funders/pcfc.svg',
+    url: 'https://prostatecanada.ca/',
+  },
+  {
+    name: 'The Terry Fox Research Institute',
+    image: 'images/funders/tfri.svg',
+    url: 'https://www.tfri.ca/',
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#08253f" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href={asset('favicon.svg')} />
+    <title>{pageTitle}</title>
+  </head>
+  <body class="funding-page">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <SiteHeader currentPage="funding" />
+
+    <main id="main" class="funding-main">
+      <section class="container funding-container" aria-labelledby="funding-title">
+        <div class="funding-intro">
+          <p class="eyebrow">OUR SUPPORTERS</p>
+          <h1 id="funding-title">Funding</h1>
+          <p class="funding-description">
+            We gratefully acknowledge the organizations that support our research.
+          </p>
+        </div>
+
+        <ul class="funders-grid" aria-label="Research funders">
+          {funders.map((funder) => (
+            <li class="funder">
+              <a class="funder-link" href={funder.url}>
+                <span class="funder-logo">
+                  <img src={asset(funder.image)} alt={`${funder.name} logo`} decoding="async" />
+                </span>
+                <span class="funder-name">{funder.name}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </main>
+
+    <footer class="site-footer funding-footer">
+      <div class="container footer-inner">
+        <p>© {new Date().getUTCFullYear()} {home.labName}</p>
+        <p>RNA biology. Cancer research. Therapeutic discovery.</p>
+        <a href={base}>Return to home <span aria-hidden="true">↗</span></a>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .funding-page { min-height: 100vh; display: flex; flex-direction: column; }
+  .funding-page > .skip-link { z-index: 200; }
+  .funding-main { flex: 1; padding-block: clamp(52px, 7vw, 84px) 88px; }
+  .funding-container { max-width: 1120px; }
+  .funding-intro { text-align: center; }
+  .funding-intro .eyebrow { margin-bottom: 16px; color: var(--accent, #a74c37); }
+  .funding-intro h1 { color: var(--navy, #08253f); font-size: clamp(2.5rem, 4.6vw, 3.7rem); line-height: 1.12; }
+  .funding-description { max-width: 600px; margin: 22px auto 0; color: var(--body, #425967); font-size: 1rem; line-height: 1.75; }
+
+  /* Three logos, followed by two centered logos. */
+  .funders-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 32px 36px; list-style: none; margin: 54px 0 0; padding: 0; }
+  .funder { grid-column: span 2; min-width: 0; }
+  .funder:nth-child(4) { grid-column: 2 / span 2; }
+  .funder:nth-child(5) { grid-column: 4 / span 2; }
+  .funder-link { display: flex; height: 100%; flex-direction: column; align-items: center; padding: 20px 8px 24px; color: var(--body, #425967); text-decoration: none; }
+  .funder-logo { display: flex; width: 100%; height: 116px; align-items: center; justify-content: center; }
+  .funder-logo img { display: block; width: auto; height: auto; max-width: 100%; max-height: 100px; object-fit: contain; }
+  .funder-name { display: block; max-width: 290px; margin-top: 22px; text-align: center; font-size: 0.83rem; line-height: 1.6; }
+  .funder-link:hover { text-decoration: none; }
+  .funder-link:hover .funder-name { text-decoration: underline; text-underline-offset: 5px; }
+  .funder-link:focus-visible { outline: 3px solid #397d9e; outline-offset: 5px; }
+  .funding-footer { border-top: 1px solid var(--line, #d7e0e5); }
+
+  @media (max-width: 900px) {
+    .funders-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px 32px; }
+    .funder:nth-child(n) { grid-column: span 2; }
+    .funder:last-child { grid-column: 2 / span 2; }
+  }
+  @media (max-width: 560px) {
+    .funding-main { padding-bottom: 58px; }
+    .funding-description { font-size: 0.95rem; }
+    .funders-grid { grid-template-columns: 1fr; gap: 16px; margin-top: 32px; }
+    .funder:nth-child(n) { grid-column: auto; }
+    .funder-link { max-width: 340px; margin-inline: auto; padding-inline: 14px; }
+    .funder-logo { height: 100px; }
+    .funder-name { margin-top: 14px; }
+  }
+</style>
