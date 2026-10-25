@@ -22,22 +22,22 @@
     "areas": [
       {
         "number": "01",
-        "title": "RNA biology & treatment resistance",
-        "text": "We investigate how RNA-binding proteins and RNA regulation influence prostate cancer progression and the ability of tumour cells to adapt to therapy.",
+        "title": "Cancer biology & treatment resistance",
+        "text": "We investigate how molecular binding proteins and broader molecular regulation influence cancer progression and the ability of tumour cells to adapt to therapy.",
         "detail": "RNA regulation · Cancer progression"
       },
       {
         "number": "02",
-        "title": "Computer-aided drug discovery",
-        "text": "We connect computational approaches with experimental research to identify and study compounds that target cancer-associated molecular processes.",
-        "detail": "Molecular targets · Therapeutic discovery"
-      },
-      {
-        "number": "03",
         "title": "Biomarkers & disease insight",
         "text": "We explore RNA-based biomarkers, including circular RNAs, to better understand prostate cancer and investigate opportunities for diagnosis.",
         "detail": "Circular RNA · Biomarker research"
       }
+      {
+        "number": "03",
+        "title": "Drug development",
+        "text": "We connect computational approaches with experimental research to identify and study compounds that target cancer-associated molecular processes.",
+        "detail": "Molecular targets · Therapeutic discovery"
+      },
     ]
   },
   "approach": {
