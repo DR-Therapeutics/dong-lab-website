@@ -7,15 +7,15 @@ const canonical = new URL(base + 'venture/', Astro.site || Astro.url.origin).hre
 // Add each video after uploading it to public/venture/assets/.
 // Leave an empty string to display the "coming soon" panel.
 const targetVideos = {
-  top2: '',   // Example: 'assets/top2-structure.mp4'
+  top2: 'assets/top2-structure.mp4',   // Example: 'assets/top2-structure.mp4'
   lin28: 'assets/lin28-structure.mp4',  // Example: 'assets/lin28-structure.mp4'
-  msi2: '',   // Example: 'assets/msi2-structure.mp4'
+  msi2: 'assets/msi2-structure.mp4',   // Example: 'assets/msi2-structure.mp4'
 };
 
 // Upload your narrated pitch to public/venture/assets/venture-pitch.mp4,
 // then replace the empty string below with 'assets/venture-pitch.mp4'.
 // Export as MP4 with H.264 video and AAC audio for broad browser support.
-const pitchVideo = '';
+const pitchVideo = 'assets/venture-pitch.mp4';
 const pitchPoster = 'assets/molecular-discovery.webp';
 ---
 <!doctype html>
@@ -128,7 +128,7 @@ const pitchPoster = 'assets/molecular-discovery.webp';
         <div class="dr-section-heading">
           <div>
             <p class="dr-eyebrow">OUR VENTURE</p>
-            <h2 id="dr-pitch-title">Watch our pitch.</h2>
+            <h2 id="dr-pitch-title">Our science. Our vision.</h2>
           </div>
           <p>A closer look at our science, our approach and the opportunity to develop new cancer therapies.</p>
         </div>
