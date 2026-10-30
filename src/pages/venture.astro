@@ -8,9 +8,15 @@ const canonical = new URL(base + 'venture/', Astro.site || Astro.url.origin).hre
 // Leave an empty string to display the "coming soon" panel.
 const targetVideos = {
   top2: '',   // Example: 'assets/top2-structure.mp4'
-  lin28: 'assets/lin28-mov.mov',  // Example: 'assets/lin28-structure.mp4'
+  lin28: 'assets/lin28-structure.mp4',  // Example: 'assets/lin28-structure.mp4'
   msi2: '',   // Example: 'assets/msi2-structure.mp4'
 };
+
+// Upload your narrated pitch to public/venture/assets/venture-pitch.mp4,
+// then replace the empty string below with 'assets/venture-pitch.mp4'.
+// Export as MP4 with H.264 video and AAC audio for broad browser support.
+const pitchVideo = '';
+const pitchPoster = 'assets/molecular-discovery.webp';
 ---
 <!doctype html>
 <html lang="en">
@@ -94,26 +100,62 @@ const targetVideos = {
           <article class="dr-target-card" aria-labelledby="top2-title">
             <div class="dr-target-media" data-target-panel>
               <div class="dr-structure-placeholder" data-structure-placeholder><span class="dr-film-label">MOLECULAR STRUCTURE</span><span class="dr-target-symbol" aria-hidden="true">TOP2</span><span class="dr-film-status" data-structure-status>Structure video coming soon</span></div>
-              <video data-structure-video="top2" data-src={targetVideos.top2 ? asset(targetVideos.top2) : undefined} controls muted loop playsinline preload="none" hidden aria-label="TOP2 molecular structure video"></video>
+              <video data-structure-video="top2" data-src={targetVideos.top2 ? asset(targetVideos.top2) : undefined} autoplay controls muted loop playsinline preload="none" hidden aria-label="TOP2 molecular structure video"></video>
             </div>
             <div class="dr-target-copy"><p class="dr-target-family">DNA TOPOISOMERASE</p><h3 id="top2-title">TOP2</h3><p class="dr-target-focus">Targeting cancer growth.</p><p class="dr-target-description">TOP2 helps cells untangle DNA during cell division. We are developing small molecules that interfere with TOP2 activity to inhibit cancer cell growth.</p><a class="dr-research-link" href="https://doi.org/10.3389/fonc.2020.633142" target="_blank" rel="noopener noreferrer">Research background <span aria-hidden="true">↗</span></a></div>
           </article>
           <article class="dr-target-card dr-target-lin28" aria-labelledby="lin28-title">
             <div class="dr-target-media" data-target-panel>
               <div class="dr-structure-placeholder" data-structure-placeholder><span class="dr-film-label">MOLECULAR STRUCTURE</span><span class="dr-target-symbol" aria-hidden="true">LIN28</span><span class="dr-film-status" data-structure-status>Structure video coming soon</span></div>
-              <video data-structure-video="lin28" data-src={targetVideos.lin28 ? asset(targetVideos.lin28) : undefined} controls muted loop playsinline preload="none" hidden aria-label="LIN28 molecular structure video"></video>
+              <video data-structure-video="lin28" data-src={targetVideos.lin28 ? asset(targetVideos.lin28) : undefined} autoplay controls muted loop playsinline preload="none" hidden aria-label="LIN28 molecular structure video"></video>
             </div>
             <div class="dr-target-copy"><p class="dr-target-family">RNA-BINDING PROTEIN</p><h3 id="lin28-title">LIN28</h3><p class="dr-target-focus">Targeting cancer stemness and translation reprogramming.</p><p class="dr-target-description">LIN28 regulates RNA programs linked to stem-like cancer cells and changes in protein production. We aim to disrupt these programs by blocking LIN28–RNA interactions.</p><a class="dr-research-link" href="https://doi.org/10.1038/s41420-024-02281-z" target="_blank" rel="noopener noreferrer">Research background <span aria-hidden="true">↗</span></a></div>
           </article>
           <article class="dr-target-card dr-target-msi2" aria-labelledby="msi2-title">
             <div class="dr-target-media" data-target-panel>
               <div class="dr-structure-placeholder" data-structure-placeholder><span class="dr-film-label">MOLECULAR STRUCTURE</span><span class="dr-target-symbol" aria-hidden="true">MSI2</span><span class="dr-film-status" data-structure-status>Structure video coming soon</span></div>
-              <video data-structure-video="msi2" data-src={targetVideos.msi2 ? asset(targetVideos.msi2) : undefined} controls muted loop playsinline preload="none" hidden aria-label="MSI2 molecular structure video"></video>
+              <video data-structure-video="msi2" data-src={targetVideos.msi2 ? asset(targetVideos.msi2) : undefined} autoplay controls muted loop playsinline preload="none" hidden aria-label="MSI2 molecular structure video"></video>
             </div>
             <div class="dr-target-copy"><p class="dr-target-family">RNA-BINDING PROTEIN</p><h3 id="msi2-title">MSI2</h3><p class="dr-target-focus">Targeting cancer survival and treatment adaptation.</p><p class="dr-target-description">MSI2 regulates RNA messages involved in cancer cell growth. We are investigating whether blocking it can weaken cell survival and limit adaptation to treatment.</p></div>
           </article>
         </div>
         <p class="dr-target-note">Research and preclinical development.</p>
+      </div>
+    </section>
+
+    <section class="dr-section dr-pitch" id="pitch" aria-labelledby="dr-pitch-title">
+      <div class="dr-wrap">
+        <div class="dr-section-heading">
+          <div>
+            <p class="dr-eyebrow">OUR VENTURE</p>
+            <h2 id="dr-pitch-title">Watch our pitch.</h2>
+          </div>
+          <p>A closer look at our science, our approach and the opportunity to develop new cancer therapies.</p>
+        </div>
+        <div class="dr-pitch-frame">
+          {pitchVideo ? (
+            <video
+              class="dr-pitch-video"
+              src={asset(pitchVideo)}
+              poster={asset(pitchPoster)}
+              controls
+              playsinline
+              preload="none"
+              aria-label="Dong Lab venture pitch"
+            >
+              Your browser does not support embedded video.
+              <a href={asset(pitchVideo)}>Open the pitch video</a>.
+            </video>
+          ) : (
+            <div class="dr-pitch-placeholder">
+              <img src={asset(pitchPoster)} alt="" loading="lazy" decoding="async" />
+              <div class="dr-pitch-placeholder-copy">
+                <span class="dr-pitch-kicker">OUR PITCH</span>
+                <p>Video coming soon.</p>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </section>
 
@@ -137,6 +179,208 @@ const targetVideos = {
     </section>
   </main>
   <footer class="dr-footer"><div class="dr-wrap dr-footer-inner"><a class="dr-wordmark" href="#top">Venture opportunity<span class="dr-wordmark-dot" aria-hidden="true">.</span></a><p>© <span data-dr-year>2026</span> Dong Lab<br><span>Cancer research. Therapeutic discovery.</span></p><a class="dr-back-top" href="#top">Back to top <span aria-hidden="true">↑</span></a></div></footer>
-  <script is:inline src={asset('script.js?v=20261023b')} defer></script>
+  <!-- This replaces the older external script so both loaders do not run. -->
+  <script is:inline>
+(() => {
+  document.querySelectorAll('[data-dr-year]').forEach(el => { el.textContent = String(new Date().getFullYear()); });
+
+  // Structure animations start silently when their panels enter the viewport.
+  // Keep native controls available for pause and for browsers that block autoplay.
+  const reduceTargets = matchMedia('(prefers-reduced-motion: reduce)');
+  document.querySelectorAll('[data-structure-video]').forEach(video => {
+    if (!(video instanceof HTMLVideoElement) || !video.dataset.src) return;
+    const panel = video.closest('[data-target-panel]');
+    const placeholder = panel?.querySelector('[data-structure-placeholder]');
+    let loaded = false;
+    let inView = false;
+    let userPaused = false;
+    let automaticPause = false;
+    let playPending = false;
+    let failed = false;
+
+    video.muted = true;
+    video.defaultMuted = true;
+    video.loop = true;
+    video.playsInline = true;
+    // JavaScript controls when playback starts; no downloads before visibility.
+    video.autoplay = false;
+
+    const load = () => {
+      if (loaded) return;
+      loaded = true;
+      video.preload = 'auto';
+      video.src = video.dataset.src;
+      video.load();
+    };
+    const pause = () => {
+      if (!video.paused) {
+        automaticPause = true;
+        video.pause();
+      }
+    };
+    const play = () => {
+      if (!inView || document.hidden || reduceTargets.matches || userPaused || failed || playPending) return;
+      load();
+      video.muted = true;
+      playPending = true;
+      video.play().then(() => {
+        if (!inView || document.hidden || reduceTargets.matches || userPaused) pause();
+      }).catch(() => {
+        // Native controls remain usable if the browser rejects autoplay.
+      }).finally(() => { playPending = false; });
+    };
+    video.addEventListener('loadedmetadata', () => {
+      video.hidden = false;
+      if (placeholder instanceof HTMLElement) placeholder.hidden = true;
+    });
+    video.addEventListener('canplay', play);
+    video.addEventListener('play', () => { userPaused = false; });
+    video.addEventListener('pause', () => {
+      if (automaticPause) { automaticPause = false; return; }
+      if (inView && !document.hidden && !reduceTargets.matches && !failed) userPaused = true;
+    });
+    video.addEventListener('error', () => {
+      failed = true;
+      video.hidden = true;
+      if (placeholder instanceof HTMLElement) {
+        placeholder.hidden = false;
+        const status = placeholder.querySelector('[data-structure-status]');
+        if (status) status.textContent = 'Structure video currently unavailable';
+      }
+    });
+
+    const update = () => {
+      if (inView && !document.hidden) {
+        load();
+        if (reduceTargets.matches || userPaused) pause();
+        else play();
+      } else pause();
+    };
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(entries => {
+        inView = entries[0].isIntersecting;
+        update();
+      }, {threshold: 0.05}).observe(panel || video);
+    } else {
+      inView = true;
+      update();
+    }
+    document.addEventListener('visibilitychange', update);
+    reduceTargets.addEventListener('change', update);
+  });
+
+  const video = document.querySelector('[data-dr-video]');
+  const button = document.querySelector('[data-dr-motion]');
+  if (!(video instanceof HTMLVideoElement) || !(button instanceof HTMLButtonElement)) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  let userPaused = false;
+  let inView = true;
+  const setButton = () => {
+    const label = button.querySelector('[data-dr-motion-label]');
+    const icon = button.querySelector('[data-dr-motion-icon]');
+    if (label) label.textContent = video.paused ? 'Play motion' : 'Pause motion';
+    if (icon) icon.textContent = video.paused ? '▶' : 'Ⅱ';
+    button.setAttribute('aria-label', video.paused ? 'Play background animation' : 'Pause background animation');
+  };
+  const play = async () => {
+    if (!video.getAttribute('src')) { video.src = video.dataset.src; video.load(); }
+    video.muted = true;
+    try { await video.play(); } catch { setButton(); }
+  };
+  video.addEventListener('playing', () => { video.dataset.playing = 'true'; setButton(); });
+  video.addEventListener('pause', setButton);
+  video.addEventListener('error', () => { video.dataset.playing = 'false'; button.hidden = true; });
+  button.addEventListener('click', () => { userPaused = !video.paused; if (userPaused) video.pause(); else play(); });
+  const preference = () => {
+    if (reduce.matches) { video.pause(); video.dataset.playing = 'false'; }
+    else if (!userPaused && inView && !document.hidden) play();
+    setButton();
+  };
+  reduce.addEventListener('change', preference);
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(entries => {
+      inView = entries[0].isIntersecting;
+      if (!inView) video.pause(); else if (!userPaused && !reduce.matches && !document.hidden) play();
+    }, {threshold: 0.05}).observe(video.closest('.dr-hero'));
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) video.pause(); else if (inView && !userPaused && !reduce.matches) play();
+  });
+  button.hidden = false;
+  preference();
+})();
+  </script>
 </body>
 </html>
+
+<style>
+  .dr-pitch {
+    background: #fff;
+  }
+
+  .dr-pitch-frame {
+    max-width: 1040px;
+    margin-inline: auto;
+    overflow: hidden;
+    border: 1px solid #dce3ed;
+    border-radius: 18px;
+    background: #091a30;
+    box-shadow: 0 18px 48px rgba(16, 39, 68, 0.12);
+  }
+
+  .dr-pitch-video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+    background: #091a30;
+  }
+
+  .dr-pitch-video:focus-visible {
+    outline: 3px solid #6896ff;
+    outline-offset: -4px;
+  }
+
+  .dr-pitch-placeholder {
+    position: relative;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+
+  .dr-pitch-placeholder img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.45;
+  }
+
+  .dr-pitch-placeholder-copy {
+    position: relative;
+    padding: 24px;
+    text-align: center;
+    color: #fff;
+  }
+
+  .dr-pitch-kicker {
+    display: block;
+    margin-bottom: 12px;
+    color: #c5d9f7;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+  }
+
+  .dr-pitch-placeholder-copy p {
+    font-size: clamp(20px, 3vw, 32px);
+    line-height: 1.3;
+    font-weight: 600;
+  }
+
+  @media (max-width: 760px) {
+    .dr-pitch-frame { border-radius: 12px; }
+  }
+</style>
