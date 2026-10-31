@@ -16,7 +16,7 @@ const targetVideos = {
 // then replace the empty string below with 'assets/venture-pitch.mp4'.
 // Export as MP4 with H.264 video and AAC audio for broad browser support.
 const pitchVideo = 'assets/venture-pitch.mp4';
-const pitchPoster = 'assets/molecular-discovery.webp';
+const pitchPoster = 'assets/pitch-poster.jpg';
 ---
 <!doctype html>
 <html lang="en">
@@ -30,7 +30,7 @@ const pitchPoster = 'assets/molecular-discovery.webp';
   <meta property="og:type" content="website">
   <meta property="og:url" content={canonical}>
   <link rel="canonical" href={canonical}>
-  <meta property="og:image" content={new URL(asset('assets/molecular-discovery.webp'), Astro.site || Astro.url.origin).href}>
+  <meta property="og:image" content={new URL(asset('assets/pitch-poster.jpg'), Astro.site || Astro.url.origin).href}>
   <meta property="og:image:alt" content="Conceptual illustration of computer-guided molecular discovery">
   <link rel="stylesheet" href={asset('styles.css?v=20261023b')}>
   <title>Venture opportunity | Dong Lab</title>
