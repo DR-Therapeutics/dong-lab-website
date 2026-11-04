@@ -1,0 +1,160 @@
+---
+import home from '../content/home.json';
+import SiteHeader from '../components/SiteHeader.astro';
+import '../styles/global.css';
+import '../styles/research.css';
+
+interface Publication {
+  title: string;
+  authors: string;
+  journal: string;
+  year: string;
+  url: string;
+}
+
+interface Props {
+  slug: string;
+  number: string;
+  topic: string;
+  title: string;
+  accent: string;
+  description: string;
+  question: string;
+  keywords: string[];
+  sections: { id: string; label: string }[];
+  publications: Publication[];
+}
+
+const {
+  slug, number, topic, title, accent, description, question,
+  keywords, sections, publications,
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
+const asset = (path: string) => base + path.replace(/^\//, '');
+const origin = Astro.site || Astro.url.origin;
+const canonical = new URL(asset(`research/${slug}/`), origin).href;
+const pageTitle = `${topic} | ${home.labName}`;
+const directions = [
+  { number: '01', slug: 'cancer-biology', title: 'Cancer biology & treatment resistance' },
+  { number: '02', slug: 'biomarkers', title: 'Biomarkers & disease insight' },
+  { number: '03', slug: 'drug-development', title: 'Drug development' },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#08253f" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(asset(home.hero.image), origin).href} />
+    <meta property="og:image:alt" content={home.hero.imageAlt} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href={asset('favicon.svg')} />
+    <title>{pageTitle}</title>
+  </head>
+  <body class="rd-page">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <!-- The existing header already links Research to the homepage section. -->
+    <SiteHeader />
+
+    <main id="main">
+      <section class="rd-hero" id="top" aria-labelledby="research-page-title">
+        <div class="container">
+          <div class="rd-breadcrumb" role="navigation" aria-label="Breadcrumb">
+            <a href={base}>Home</a>
+            <span aria-hidden="true">/</span>
+            <a href={`${base}#research`}>Research</a>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">{topic}</span>
+          </div>
+          <div class="rd-hero-grid">
+            <div>
+              <p class="eyebrow">OUR RESEARCH <span aria-hidden="true">·</span> {number}</p>
+              <h1 id="research-page-title">{title}<em>{accent}</em></h1>
+              <p class="rd-hero-description">{description}</p>
+              <a class="rd-hero-link" href="#overview">Explore this research <span aria-hidden="true">↓</span></a>
+            </div>
+            <div class="rd-question">
+              <p class="eyebrow">THE QUESTION</p>
+              <p class="rd-question-text">{question}</p>
+              <ul class="rd-keywords" aria-label="Key topics">
+                {keywords.map(keyword => <li>{keyword}</li>)}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="rd-directions" role="navigation" aria-label="Research directions">
+        <div class="container rd-directions-inner">
+          {directions.map(direction => (
+            <a href={asset(`research/${direction.slug}/`)} aria-current={slug === direction.slug ? 'page' : undefined}>
+              <span class="rd-direction-number" aria-hidden="true">{direction.number}</span>
+              <span>{direction.title}</span>
+              <span class="rd-direction-arrow" aria-hidden="true">↗</span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div class="container rd-layout">
+        <aside class="rd-sidebar" aria-label="On this page">
+          <p class="eyebrow">ON THIS PAGE</p>
+          <ul>
+            {sections.map(section => <li><a href={`#${section.id}`}>{section.label}</a></li>)}
+            <li><a href="#related-publications">Selected publications</a></li>
+          </ul>
+          <a class="rd-back-link" href={`${base}#research`}><span aria-hidden="true">←</span> All research directions</a>
+        </aside>
+
+        <div class="rd-content">
+          <slot />
+
+          <section class="rd-section" id="related-publications" aria-labelledby="publications-heading">
+            <p class="eyebrow">FURTHER READING</p>
+            <h2 id="publications-heading">Selected publications.</h2>
+            <ul class="rd-publications">
+              {publications.map(publication => (
+                <li>
+                  <p class="rd-publication-meta">{publication.journal} <span aria-hidden="true">·</span> {publication.year}</p>
+                  <h3><a href={publication.url}>{publication.title} <span aria-hidden="true">↗</span></a></h3>
+                  <p class="rd-publication-authors">{publication.authors}</p>
+                </li>
+              ))}
+            </ul>
+            <a class="inline-link" href={asset('publications/')}>More lab publications <span aria-hidden="true">↗</span></a>
+          </section>
+        </div>
+      </div>
+
+      <section class="contact-section rd-connect" aria-labelledby="connect-heading">
+        <div class="container rd-connect-inner">
+          <div>
+            <p class="eyebrow">CONNECT WITH US</p>
+            <h2 id="connect-heading">Continue the conversation.</h2>
+            <p class="contact-description">Interested in this research or a possible collaboration? We would like to hear from you.</p>
+          </div>
+          <a class="button button-light" href={`${base}#contact`}>Contact the lab <span aria-hidden="true">↗</span></a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>© {new Date().getUTCFullYear()} {home.labName}</p>
+        <p>RNA biology. Cancer research. Therapeutic discovery.</p>
+        <a href="#top">Back to top <span aria-hidden="true">↑</span></a>
+      </div>
+    </footer>
+
+    <!-- The same Cloudflare Web Analytics beacon used on the homepage. -->
+    <script is:inline defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"aa79c36c6ed04e05b5b7e1e19f3b9453"}'></script>
+  </body>
+</html>
