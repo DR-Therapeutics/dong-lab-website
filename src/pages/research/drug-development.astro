@@ -1,6 +1,13 @@
 ---
 import ResearchLayout from '../../layouts/ResearchLayout.astro';
 
+const base = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
+const asset = (path: string) => base + path.replace(/^\//, '');
+
+// Upload your MP4 to public/videos/lin28-small-molecule.mp4.
+// To change the video later, update this filename and upload the matching file.
+const lin28Video = 'videos/lin28-small-molecule.mp4';
+
 const publications = [
   {
     title: 'Developing novel Lin28 inhibitors by computer aided drug design',
@@ -10,11 +17,25 @@ const publications = [
     url: 'https://doi.org/10.1038/s41420-024-02281-z',
   },
   {
+    title: 'Discovery of Novel Lin28 Inhibitors to Suppress Cancer Cell Stemness',
+    authors: 'Radaeva M. et al.',
+    journal: 'Cancers',
+    year: '2022',
+    url: 'https://doi.org/10.3390/cancers14225687',
+  },
+  {
     title: 'Optimization of New Catalytic Topoisomerase II Inhibitors as an Anti-Cancer Therapy',
     authors: 'Matias-Barrios V. M. et al.',
     journal: 'Cancers',
     year: '2021',
     url: 'https://doi.org/10.3390/cancers13153675',
+  },
+  {
+    title: 'Discovery of New Catalytic Topoisomerase II Inhibitors for Anticancer Therapeutics',
+    authors: 'Matias-Barrios V. M. et al.',
+    journal: 'Frontiers in oncology',
+    year: '2021',
+    url: 'https://doi.org/10.3389/fonc.2020.633142',
   },
 ];
 ---
@@ -31,6 +52,7 @@ const publications = [
   sections={[
     { id: 'overview', label: 'Overview' },
     { id: 'targets', label: 'Research programmes' },
+    { id: 'lin28-structure', label: 'LIN28 structure' },
     { id: 'discovery-process', label: 'Our discovery process' },
     { id: 'translation', label: 'Towards translation' },
   ]}
@@ -87,6 +109,36 @@ const publications = [
     </div>
   </section>
 
+  <section class="rd-section" id="lin28-structure" aria-labelledby="lin28-structure-heading">
+    <p class="eyebrow">MOLECULAR STRUCTURE</p>
+    <h2 id="lin28-structure-heading">A closer look at LIN28.</h2>
+    <figure class="lin28-figure" data-lin28-animation>
+      <video
+        id="lin28-structure-video"
+        class="lin28-video"
+        src={asset(lin28Video)}
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        width="1280"
+        height="720"
+        aria-label="Structure animation of LIN28 and a small molecule"
+        aria-describedby="lin28-structure-caption"
+      >
+        Your browser does not support embedded video.
+        <a href={asset(lin28Video)}>Open the LIN28 structure video</a>.
+      </video>
+      <figcaption>
+        <span id="lin28-structure-caption">Structural visualization of LIN28 and a small molecule.</span>
+        <button class="lin28-toggle" type="button" aria-controls="lin28-structure-video" hidden>Pause animation</button>
+      </figcaption>
+      <p class="lin28-status" role="status" hidden>The video is currently unavailable. Please try again later.</p>
+      <noscript><p><a href={asset(lin28Video)}>Open the video in your browser's player</a>.</p></noscript>
+    </figure>
+  </section>
+
   <section class="rd-section" id="discovery-process" aria-labelledby="process-heading">
     <p class="eyebrow">OUR DISCOVERY PROCESS</p>
     <h2 id="process-heading">Design. Test. Learn. Refine.</h2>
@@ -133,3 +185,102 @@ const publications = [
     </div>
   </section>
 </ResearchLayout>
+
+<script>
+  function initializeLin28Animation() {
+    const figure = document.querySelector<HTMLElement>('[data-lin28-animation]');
+    if (!figure || figure.dataset.initialized === 'true') return;
+    const video = figure.querySelector<HTMLVideoElement>('video');
+    const button = figure.querySelector<HTMLButtonElement>('.lin28-toggle');
+    const status = figure.querySelector<HTMLElement>('.lin28-status');
+    if (!video || !button || !status) return;
+    figure.dataset.initialized = 'true';
+
+    // Set both the HTML attribute and the playback property for muted autoplay.
+    video.muted = true;
+    button.hidden = false;
+    const updateButton = () => {
+      button.textContent = video.paused ? 'Play animation' : 'Pause animation';
+    };
+    const play = () => {
+      // If the browser blocks autoplay, the small button remains usable.
+      video.play().catch(updateButton);
+    };
+    const showError = () => {
+      status.hidden = false;
+      button.hidden = true;
+    };
+
+    button.addEventListener('click', () => video.paused ? play() : video.pause());
+    video.addEventListener('play', updateButton);
+    video.addEventListener('pause', updateButton);
+    video.addEventListener('error', showError);
+
+    if (video.error) {
+      showError();
+      return;
+    }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      video.autoplay = false;
+      video.pause();
+      updateButton();
+    } else {
+      play();
+    }
+  }
+
+  initializeLin28Animation();
+  document.addEventListener('astro:page-load', initializeLin28Animation);
+</script>
+
+<style>
+  .lin28-figure {
+    width: 100%;
+    max-width: 760px;
+    margin: 0;
+  }
+  .lin28-video {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+    background: #fff;
+    border: 1px solid var(--line, #d7e0e5);
+    border-radius: 4px;
+  }
+  .lin28-figure figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 20px;
+    padding-top: 12px;
+    color: var(--muted, #60727d);
+    font-size: .8125rem;
+    line-height: 1.6;
+  }
+  .lin28-toggle {
+    flex-shrink: 0;
+    min-height: 44px;
+    padding: 8px 0;
+    border: 0;
+    background: transparent;
+    color: var(--navy, #08253f);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .lin28-toggle:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .lin28-toggle:focus-visible {
+    outline: 3px solid #397d9e;
+    outline-offset: 4px;
+  }
+  .lin28-toggle[hidden],
+  .lin28-status[hidden] { display: none; }
+  .lin28-figure .lin28-status { margin-top: 14px; font-size: .875rem; }
+</style>
