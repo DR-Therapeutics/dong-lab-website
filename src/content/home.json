@@ -7,7 +7,8 @@
     "title": "Understanding cancer.",
     "accent": "Advancing discovery.",
     "text": "We study how cancer cells adapt to treatment—and how that knowledge can guide new therapeutic strategies.",
-    "image": "images/ai-drug-discovery.png"
+    "image": "images/ai-drug-discovery.png",
+    "imageAlt": "Conceptual illustration of molecular research and computer-aided drug discovery."
   },
   "about": {
     "label": "THE DONG LAB",
@@ -23,20 +24,23 @@
       {
         "number": "01",
         "title": "Cancer biology & treatment resistance",
-        "text": "We investigate how molecular binding proteins and broader molecular regulation influence cancer progression and the ability of tumour cells to adapt to therapy.",
-        "detail": "RNA regulation · Cancer progression"
+        "text": "We investigate how androgen receptor signalling, RNA-binding proteins and RNA regulation influence prostate cancer progression and adaptation to treatment.",
+        "detail": "RNA regulation · Cancer progression",
+        "href": "research/cancer-biology/"
       },
       {
         "number": "02",
         "title": "Biomarkers & disease insight",
-        "text": "We explore RNA-based biomarkers, including circular RNAs, to better understand prostate cancer and investigate opportunities for diagnosis.",
-        "detail": "Circular RNA · Biomarker research"
+        "text": "We connect molecular pathology with RNA-based biomarker research, including circular RNAs, to understand prostate cancer and investigate signals of disease progression.",
+        "detail": "Molecular pathology · Circular RNA",
+        "href": "research/biomarkers/"
       },
       {
         "number": "03",
         "title": "Drug development",
-        "text": "We connect computational approaches with experimental research to identify and study compounds that target cancer-associated molecular processes.",
-        "detail": "Molecular targets · Therapeutic discovery"
+        "text": "We combine AI-enabled computer-aided drug design with experiments to discover and refine compounds targeting cancer-associated molecular processes.",
+        "detail": "Molecular targets · Therapeutic discovery",
+        "href": "research/drug-development/"
       }
     ]
   },
