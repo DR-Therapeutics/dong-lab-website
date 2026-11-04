@@ -1,6 +1,12 @@
 ---
 import ResearchLayout from '../../layouts/ResearchLayout.astro';
 
+const base = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
+const asset = (path: string) => base + path.replace(/^\//, '');
+
+// Upload the original figures to public/images/research/.
+// Filenames are case-sensitive: UGT_AR.jpg and SRRM4_splicing.jpg.
+
 const publications = [
   {
     title: 'Histone demethylase JMJD1A promotes alternative splicing of AR variant 7 (AR-V7) in prostate cancer cells',
@@ -76,6 +82,35 @@ const publications = [
             and regulatory pathways that support AR activity when androgen signalling
             is disrupted, including mechanisms involving UGT2B17, BMI1, PARP2, KIF15 and RUVBL1.
           </p>
+
+          <figure class="rd-research-figure">
+            <a
+              class="rd-figure-image"
+              href={asset('images/research/UGT_AR.jpg')}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open the UGT2B17 and AR signalling figure at full size (opens in a new tab)"
+            >
+              <img
+                src={asset('images/research/UGT_AR.jpg')}
+                alt="Diagram comparing androgen-dependent AR signalling with UGT2B17 and c-Src-associated AR signalling in castration-resistant prostate cancer."
+                width="2048"
+                height="865"
+                loading="lazy"
+                decoding="async"
+              />
+            </a>
+            <figcaption>
+              <span><strong>UGT2B17 and AR signalling.</strong> A model of changes in AR signalling in castration-resistant prostate cancer.</span>
+              <a
+                class="rd-figure-link"
+                href={asset('images/research/UGT_AR.jpg')}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="View the UGT2B17 and AR signalling figure at full size (opens in a new tab)"
+              >View full-size figure <span aria-hidden="true">↗</span></a>
+            </figcaption>
+          </figure>
         </div>
       </article>
       <article class="rd-focus">
@@ -89,6 +124,35 @@ const publications = [
             for the splicing factor <strong>SRRM4</strong>. We investigate how its effects
             on regulators such as REST alter cell identity and tumour behaviour.
           </p>
+
+          <figure class="rd-research-figure">
+            <a
+              class="rd-figure-image"
+              href={asset('images/research/SRRM4_splicing.jpg')}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open the SRRM4 and RNA splicing figure at full size (opens in a new tab)"
+            >
+              <img
+                src={asset('images/research/SRRM4_splicing.jpg')}
+                alt="Diagram linking chromatin organization and SRRM4-associated RNA splicing with cell survival, lineage plasticity, proliferation and neuroendocrine differentiation."
+                width="1800"
+                height="1588"
+                loading="lazy"
+                decoding="async"
+              />
+            </a>
+            <figcaption>
+              <span><strong>SRRM4 and RNA splicing.</strong> An overview of RNA regulation, cell-state changes and neuroendocrine differentiation.</span>
+              <a
+                class="rd-figure-link"
+                href={asset('images/research/SRRM4_splicing.jpg')}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="View the SRRM4 and RNA splicing figure at full size (opens in a new tab)"
+              >View full-size figure <span aria-hidden="true">↗</span></a>
+            </figcaption>
+          </figure>
         </div>
       </article>
       <article class="rd-focus">
@@ -135,3 +199,61 @@ const publications = [
     </ul>
   </section>
 </ResearchLayout>
+
+<style>
+  /* Figure styles apply only to this page. Images keep their original proportions. */
+  .rd-research-figure {
+    width: 100%;
+    min-width: 0;
+    margin: 26px 0 6px;
+  }
+
+  .rd-figure-image {
+    display: block;
+    padding: clamp(8px, 1.5vw, 16px);
+    border: 1px solid #d7e0e5;
+    border-radius: 4px;
+    background: #fff;
+    text-decoration: none;
+    cursor: zoom-in;
+  }
+
+  .rd-figure-image img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .rd-research-figure figcaption {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 14px;
+    color: #60727d;
+    font-size: 0.875rem;
+    line-height: 1.65;
+  }
+
+  .rd-research-figure figcaption strong {
+    color: #102e44;
+    font-weight: 700;
+  }
+
+  .rd-figure-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding-block: 8px;
+    color: #08253f;
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+
+  .rd-research-figure a:focus-visible {
+    outline: 3px solid #397d9e;
+    outline-offset: 4px;
+  }
+</style>
+
