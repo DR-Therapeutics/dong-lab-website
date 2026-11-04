@@ -1,0 +1,137 @@
+---
+import ResearchLayout from '../../layouts/ResearchLayout.astro';
+
+const publications = [
+  {
+    title: 'Histone demethylase JMJD1A promotes alternative splicing of AR variant 7 (AR-V7) in prostate cancer cells',
+    authors: 'Fan L. et al.',
+    journal: 'PNAS',
+    year: '2018',
+    url: 'https://doi.org/10.1073/pnas.1802415115',
+  },
+  {
+    title: 'SRRM4 Drives Neuroendocrine Transdifferentiation of Prostate Adenocarcinoma Under Androgen Receptor Pathway Inhibition',
+    authors: 'Li Y. et al.',
+    journal: 'European Urology',
+    year: '2017',
+    url: 'https://doi.org/10.1016/j.eururo.2016.04.028',
+  },
+  {
+    title: 'LIN28B promotes the development of neuroendocrine prostate cancer',
+    authors: 'Lovnicki J. et al.',
+    journal: 'Journal of Clinical Investigation',
+    year: '2020',
+    url: 'https://doi.org/10.1172/JCI135373',
+  },
+];
+---
+
+<ResearchLayout
+  slug="cancer-biology"
+  number="01"
+  topic="Cancer biology & treatment resistance"
+  title="Cancer biology."
+  accent="Understanding resistance."
+  description="We investigate how androgen receptor signalling and RNA regulation help prostate cancer cells survive treatment, change their identity and continue to grow."
+  question="How do cancer cells adapt when the pathways they depend on are blocked?"
+  keywords={['Androgen receptor', 'RNA splicing', 'Cell-state changes']}
+  sections={[
+    { id: 'overview', label: 'Overview' },
+    { id: 'research-focus', label: 'What we study' },
+    { id: 'how-we-work', label: 'How we study it' },
+    { id: 'questions', label: 'Questions that guide us' },
+  ]}
+  publications={publications}
+>
+  <!-- Edit the text below to update this page. Use <strong>text</strong> for bold. -->
+  <section class="rd-section" id="overview" aria-labelledby="overview-heading">
+    <p class="eyebrow">THE BIOLOGICAL CHALLENGE</p>
+    <h2 id="overview-heading">Understanding how resistant disease develops.</h2>
+    <p>
+      Prostate cancer often depends on signals from the <strong>androgen receptor (AR)</strong>.
+      Treatments that reduce androgen levels or block this receptor can control disease,
+      but some tumours find ways to keep growing. Prostate cancer that progresses despite
+      androgen deprivation is called <strong>castration-resistant prostate cancer (CRPC)</strong>.
+    </p>
+    <p>
+      Our research examines two connected routes to resistance: maintaining AR activity
+      under treatment, and adopting cell states that rely less on AR signalling. We focus
+      on transcription, RNA splicing and RNA-binding proteins to understand how these
+      changes happen and where they create opportunities for intervention.
+    </p>
+  </section>
+
+  <section class="rd-section" id="research-focus" aria-labelledby="focus-heading">
+    <p class="eyebrow">WHAT WE STUDY</p>
+    <h2 id="focus-heading">From RNA regulation to tumour behaviour.</h2>
+    <div class="rd-focus-list">
+      <article class="rd-focus">
+        <span class="rd-focus-number" aria-hidden="true">01</span>
+        <div>
+          <h3>Androgen receptor signalling and AR-V7</h3>
+          <p>
+            Alternative RNA splicing allows a gene to produce different RNA messages.
+            Our work has helped explain how this process generates <strong>AR-V7</strong>,
+            an AR variant associated with resistant disease. We also investigate proteins
+            and regulatory pathways that support AR activity when androgen signalling
+            is disrupted, including mechanisms involving UGT2B17, BMI1, PARP2, KIF15 and RUVBL1.
+          </p>
+        </div>
+      </article>
+      <article class="rd-focus">
+        <span class="rd-focus-number" aria-hidden="true">02</span>
+        <div>
+          <h3>RNA splicing and neuroendocrine disease</h3>
+          <p>
+            Some resistant tumours acquire neuroendocrine features and become less
+            dependent on AR. Our studies identified a splicing programme associated
+            with <strong>neuroendocrine prostate cancer (NEPC)</strong> and a central role
+            for the splicing factor <strong>SRRM4</strong>. We investigate how its effects
+            on regulators such as REST alter cell identity and tumour behaviour.
+          </p>
+        </div>
+      </article>
+      <article class="rd-focus">
+        <span class="rd-focus-number" aria-hidden="true">03</span>
+        <div>
+          <h3>Stem-like programmes and cellular plasticity</h3>
+          <p>
+            Cellular plasticity is the ability of cells to change their state. Our
+            research linked <strong>LIN28B</strong> to a stem-like gene programme involving
+            let-7 and <strong>SOX2</strong> in NEPC models. This work connects RNA regulation
+            with the flexibility that can allow cancer cells to adapt to treatment.
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="rd-section" id="how-we-work" aria-labelledby="methods-heading">
+    <p class="eyebrow">OUR APPROACH</p>
+    <h2 id="methods-heading">Connecting molecular mechanisms with disease.</h2>
+    <dl class="rd-methods">
+      <div>
+        <dt>Identify changes in gene expression and RNA processing</dt>
+        <dd>Transcriptomic analysis and bioinformatics help identify the RNA programmes associated with different tumour states.</dd>
+      </div>
+      <div>
+        <dt>Test how individual regulators work</dt>
+        <dd>Molecular and cellular experiments investigate how changing a protein or pathway affects RNA regulation, cell identity and growth.</dd>
+      </div>
+      <div>
+        <dt>Connect experimental findings with tumour biology</dt>
+        <dd>Disease models and analyses of tumour specimens help us examine the relevance of these mechanisms to resistant prostate cancer.</dd>
+      </div>
+    </dl>
+  </section>
+
+  <section class="rd-section" id="questions" aria-labelledby="questions-heading">
+    <p class="eyebrow">LOOKING AHEAD</p>
+    <h2 id="questions-heading">Questions that guide our research.</h2>
+    <ul class="rd-questions">
+      <li>Which RNA-processing changes allow AR signalling to persist during treatment?</li>
+      <li>What enables tumour cells to switch into neuroendocrine or stem-like states?</li>
+      <li>Which molecular dependencies could become targets for new therapeutic strategies?</li>
+    </ul>
+  </section>
+</ResearchLayout>

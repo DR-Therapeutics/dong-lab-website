@@ -1,0 +1,110 @@
+---
+import ResearchLayout from '../../layouts/ResearchLayout.astro';
+
+const publications = [
+  {
+    title: 'Characterization of a Prostate- and Prostate Cancer-Specific Circular RNA Encoded by the Androgen Receptor Gene',
+    authors: 'Luo J. et al.',
+    journal: 'Molecular Therapy — Nucleic Acids',
+    year: '2019',
+    url: 'https://doi.org/10.1016/j.omtn.2019.10.015',
+  },
+];
+---
+
+<ResearchLayout
+  slug="biomarkers"
+  number="02"
+  topic="Biomarkers & disease insight"
+  title="Biomarkers."
+  accent="Reading the signals."
+  description="We study molecular changes in prostate cancer to understand tumour behaviour and investigate candidate biomarkers for disease detection, progression and treatment response."
+  question="What can the molecular signals in a tumour tell us about how the disease is changing?"
+  keywords={['Molecular pathology', 'Circular RNA', 'Tumour heterogeneity']}
+  sections={[
+    { id: 'overview', label: 'Overview' },
+    { id: 'molecular-pathology', label: 'Molecular pathology' },
+    { id: 'circular-rna', label: 'Circular RNA' },
+    { id: 'clinical-relevance', label: 'From signal to insight' },
+  ]}
+  publications={publications}
+>
+  <!-- Edit the text below to update this page. Use <strong>text</strong> for bold. -->
+  <section class="rd-section" id="overview" aria-labelledby="overview-heading">
+    <p class="eyebrow">THE TRANSLATIONAL QUESTION</p>
+    <h2 id="overview-heading">Making molecular changes informative.</h2>
+    <p>
+      A biomarker is a measurable characteristic that can provide information about a
+      biological process or disease. In prostate cancer, changes in RNA, proteins and
+      DNA may help reveal how a tumour is behaving and how it is adapting to treatment.
+    </p>
+    <p>
+      We connect molecular biology with pathology to investigate these signals.
+      Through collaborations with pathologists in Canada and the United States, we
+      examine molecular events within individual tumour cells and relate them to
+      clinical and pathological features. This approach preserves the tissue context
+      that can be lost when measurements are averaged across a whole sample.
+    </p>
+  </section>
+
+  <section class="rd-section" id="molecular-pathology" aria-labelledby="pathology-heading">
+    <p class="eyebrow">MOLECULAR PATHOLOGY</p>
+    <h2 id="pathology-heading">Studying signals where they occur.</h2>
+    <p>
+      Tumours contain cells with different molecular characteristics. Our pathology
+      assays help us investigate this diversity at the level of individual cells,
+      connecting the location of a signal with the cells that carry it.
+    </p>
+    <dl class="rd-methods">
+      <div>
+        <dt>Protein proximity — proximity ligation assays (PLA)</dt>
+        <dd>PLA detects close proximity between selected proteins in cells and tissue. With appropriate controls, it supports studies of protein complexes and interactions involved in cancer signalling.</dd>
+      </div>
+      <div>
+        <dt>RNA expression and splicing — RNA in situ hybridization (RISH)</dt>
+        <dd>RNA probes locate selected transcripts within tissue. Carefully designed probes can help distinguish RNA forms, allowing us to study alternative splicing in the context of tumour architecture.</dd>
+      </div>
+      <div>
+        <dt>Genetic alterations — DNA in situ assays</dt>
+        <dd>DNA-based assays, including DNA Scope approaches, allow us to investigate selected genetic alterations within individual cells. The changes that can be measured depend on the probes and assay design.</dd>
+      </div>
+    </dl>
+  </section>
+
+  <section class="rd-section" id="circular-rna" aria-labelledby="circrna-heading">
+    <p class="eyebrow">RNA-BASED BIOMARKERS</p>
+    <h2 id="circrna-heading">Exploring the information carried by circular RNA.</h2>
+    <p>
+      Circular RNAs are RNA molecules with a closed-loop structure. We investigate
+      their expression and their potential to provide information about prostate cancer,
+      alongside our work on other forms of RNA regulation.
+    </p>
+    <div class="rd-callout">
+      <h3>A research example: circAR3</h3>
+      <p>
+        Our published work characterized <strong>circAR3</strong>, a circular RNA produced
+        from the androgen receptor gene. The study examined prostate tissue, experimental
+        models and patient plasma, supporting further investigation of circAR3 as a
+        candidate biomarker. These findings describe an avenue for research; they do
+        not establish a routine clinical test.
+      </p>
+    </div>
+  </section>
+
+  <section class="rd-section" id="clinical-relevance" aria-labelledby="relevance-heading">
+    <p class="eyebrow">FROM SIGNAL TO INSIGHT</p>
+    <h2 id="relevance-heading">Connecting measurements with meaningful questions.</h2>
+    <p>
+      We study molecular measurements in relation to clinical and pathological
+      characteristics to ask what they reveal about disease. A useful candidate must
+      progress beyond an interesting association: its measurement needs to be
+      reproducible, its relevance needs to hold across independent samples, and its
+      value must be assessed for a clearly defined use.
+    </p>
+    <ul class="rd-questions">
+      <li>Which signals distinguish different tumour states or stages of progression?</li>
+      <li>Can RNA or protein changes help identify how a tumour is responding to treatment?</li>
+      <li>How can tissue-based and circulating measurements complement one another?</li>
+    </ul>
+  </section>
+</ResearchLayout>

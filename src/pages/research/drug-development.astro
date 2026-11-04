@@ -1,0 +1,135 @@
+---
+import ResearchLayout from '../../layouts/ResearchLayout.astro';
+
+const publications = [
+  {
+    title: 'Developing novel Lin28 inhibitors by computer aided drug design',
+    authors: 'Matias-Barrios V. M. et al.',
+    journal: 'Cell Death Discovery',
+    year: '2025',
+    url: 'https://doi.org/10.1038/s41420-024-02281-z',
+  },
+  {
+    title: 'Optimization of New Catalytic Topoisomerase II Inhibitors as an Anti-Cancer Therapy',
+    authors: 'Matias-Barrios V. M. et al.',
+    journal: 'Cancers',
+    year: '2021',
+    url: 'https://doi.org/10.3390/cancers13153675',
+  },
+];
+---
+
+<ResearchLayout
+  slug="drug-development"
+  number="03"
+  topic="Drug development"
+  title="Drug development."
+  accent="From targets to candidates."
+  description="We combine AI-enabled computer-aided drug design with laboratory experiments to discover and refine small molecules that target mechanisms of resistant prostate cancer."
+  question="Can a molecular mechanism that helps cancer survive become a starting point for a new therapy?"
+  keywords={['Computer-aided drug design', 'TOP2 and LIN28', 'Preclinical research']}
+  sections={[
+    { id: 'overview', label: 'Overview' },
+    { id: 'targets', label: 'Research programmes' },
+    { id: 'discovery-process', label: 'Our discovery process' },
+    { id: 'translation', label: 'Towards translation' },
+  ]}
+  publications={publications}
+>
+  <!-- Edit the text below to update this page. Use <strong>text</strong> for bold. -->
+  <section class="rd-section" id="overview" aria-labelledby="overview-heading">
+    <p class="eyebrow">TURNING BIOLOGY INTO OPPORTUNITY</p>
+    <h2 id="overview-heading">Drug discovery begins with a biological question.</h2>
+    <p>
+      Understanding a mechanism of treatment resistance can reveal a new molecular
+      target. We investigate whether small molecules can disrupt those mechanisms
+      and create opportunities to treat prostate cancers that remain dependent on
+      the androgen receptor, as well as those that have become less dependent on it.
+    </p>
+    <p>
+      Our approach connects <strong>AI-enabled computer-aided drug design</strong> with
+      biochemical assays and disease models. Computational work helps prioritize
+      compounds; experiments determine what those compounds actually do and guide
+      the next round of design.
+    </p>
+  </section>
+
+  <section class="rd-section" id="targets" aria-labelledby="targets-heading">
+    <p class="eyebrow">RESEARCH PROGRAMMES</p>
+    <h2 id="targets-heading">Two routes into cancer cell biology.</h2>
+    <div class="rd-focus-list">
+      <article class="rd-focus">
+        <span class="rd-focus-number" aria-hidden="true">01</span>
+        <div>
+          <h3>TOP2: targeting a dependency of proliferating cells</h3>
+          <p>
+            <strong>Topoisomerase II (TOP2)</strong> helps manage DNA topology during
+            essential cellular processes. Our work has developed catalytic inhibitors
+            designed to interfere with TOP2 function. Published studies describe
+            compounds that block TOP2–DNA interaction and examine how chemical
+            modifications affect activity, solubility and stability.
+          </p>
+        </div>
+      </article>
+      <article class="rd-focus">
+        <span class="rd-focus-number" aria-hidden="true">02</span>
+        <div>
+          <h3>LIN28: targeting RNA regulation and stem-like programmes</h3>
+          <p>
+            <strong>LIN28</strong> is an RNA-binding protein involved in gene networks
+            associated with cancer stemness and treatment resistance. We investigate
+            small molecules that interrupt its interaction with RNA. Our published
+            work combines computational design with biochemical and cellular studies
+            to assess these compounds and their effects on cancer cell growth.
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="rd-section" id="discovery-process" aria-labelledby="process-heading">
+    <p class="eyebrow">OUR DISCOVERY PROCESS</p>
+    <h2 id="process-heading">Design. Test. Learn. Refine.</h2>
+    <p>
+      Drug discovery is an iterative process. Each stage provides evidence that helps
+      us decide which compounds to investigate further and which properties need improvement.
+    </p>
+    <ol class="rd-process">
+      <li>
+        <h3>Understand the target</h3>
+        <p>Investigate a protein's role in resistant disease and identify the activity or molecular interaction that a compound should disrupt.</p>
+      </li>
+      <li>
+        <h3>Prioritize and design compounds</h3>
+        <p>Use computational screening, structural modelling and AI-enabled approaches to identify chemical starting points and guide modifications.</p>
+      </li>
+      <li>
+        <h3>Test the mechanism and cellular effects</h3>
+        <p>Use biochemical assays and cancer cell models to examine target activity, molecular interactions and the effects of compounds on growth.</p>
+      </li>
+      <li>
+        <h3>Refine promising candidates</h3>
+        <p>Bring experimental results back into compound design, and use appropriate preclinical models to investigate activity and properties relevant to further development.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="rd-section" id="translation" aria-labelledby="translation-heading">
+    <p class="eyebrow">TOWARDS TRANSLATION</p>
+    <h2 id="translation-heading">Building evidence for the next step.</h2>
+    <p>
+      The lab's drug-discovery work has generated patented compound series targeting
+      TOP2 and LIN28. Our goal is to build on these chemical starting points to develop
+      new therapeutic strategies and investigate opportunities to improve existing treatments.
+    </p>
+    <div class="rd-callout">
+      <h3>Preclinical research</h3>
+      <p>
+        These programmes study experimental compounds. Activity in biochemical assays,
+        cells or animal models is an important research step, but does not establish
+        safety or effectiveness in patients. Further evaluation is needed as candidates
+        progress towards potential clinical development.
+      </p>
+    </div>
+  </section>
+</ResearchLayout>
