@@ -23,11 +23,13 @@ interface Props {
   keywords: string[];
   sections: { id: string; label: string }[];
   publications: Publication[];
+  bannerImage?: string;
+  bannerImageAlt?: string;
 }
 
 const {
   slug, number, topic, title, accent, description, question,
-  keywords, sections, publications,
+  keywords, sections, publications, bannerImage, bannerImageAlt = '',
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
@@ -35,6 +37,8 @@ const asset = (path: string) => base + path.replace(/^\//, '');
 const origin = Astro.site || Astro.url.origin;
 const canonical = new URL(asset(`research/${slug}/`), origin).href;
 const pageTitle = `${topic} | ${home.labName}`;
+const socialImage = bannerImage || home.hero.image;
+const socialImageAlt = bannerImage ? bannerImageAlt : (home.hero.imageAlt || 'Dong Lab research illustration');
 const directions = [
   { number: '01', slug: 'cancer-biology', title: 'Cancer biology & treatment resistance' },
   { number: '02', slug: 'biomarkers', title: 'Biomarkers & disease insight' },
@@ -53,8 +57,8 @@ const directions = [
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={new URL(asset(home.hero.image), origin).href} />
-    <meta property="og:image:alt" content={home.hero.imageAlt} />
+    <meta property="og:image" content={new URL(asset(socialImage), origin).href} />
+    <meta property="og:image:alt" content={socialImageAlt} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href={asset('favicon.svg')} />
     <title>{pageTitle}</title>
@@ -65,8 +69,14 @@ const directions = [
     <SiteHeader />
 
     <main id="main">
-      <section class="rd-hero" id="top" aria-labelledby="research-page-title">
-        <div class="container">
+      <section class:list={['rd-hero', { 'rd-hero--banner': Boolean(bannerImage) }]} id="top" aria-labelledby="research-page-title">
+        {bannerImage && (
+          <>
+            <img class="rd-banner-image" src={asset(bannerImage)} alt="" aria-hidden="true" width="1774" height="887" fetchpriority="high" decoding="async" />
+            <div class="rd-banner-shade" aria-hidden="true"></div>
+          </>
+        )}
+        <div class="container rd-hero-content">
           <div class="rd-breadcrumb" role="navigation" aria-label="Breadcrumb">
             <a href={base}>Home</a>
             <span aria-hidden="true">/</span>
@@ -75,12 +85,13 @@ const directions = [
             <span aria-current="page">{topic}</span>
           </div>
           <div class="rd-hero-grid">
-            <div>
+            <div class="rd-hero-copy">
               <p class="eyebrow">OUR RESEARCH <span aria-hidden="true">·</span> {number}</p>
               <h1 id="research-page-title">{title}<em>{accent}</em></h1>
               <p class="rd-hero-description">{description}</p>
               <a class="rd-hero-link" href="#overview">Explore this research <span aria-hidden="true">↓</span></a>
             </div>
+            {!bannerImage && (
             <div class="rd-question">
               <p class="eyebrow">THE QUESTION</p>
               <p class="rd-question-text">{question}</p>
@@ -88,9 +99,24 @@ const directions = [
                 {keywords.map(keyword => <li>{keyword}</li>)}
               </ul>
             </div>
+            )}
           </div>
         </div>
       </section>
+
+      {bannerImage && (
+        <section class="rd-banner-context" aria-labelledby="banner-question-heading">
+          <div class="container rd-banner-context-inner">
+            <div>
+              <h2 class="rd-banner-label" id="banner-question-heading">THE QUESTION</h2>
+              <p class="rd-banner-question">{question}</p>
+            </div>
+            <ul class="rd-banner-topics" aria-label="Key topics">
+              {keywords.map(keyword => <li>{keyword}</li>)}
+            </ul>
+          </div>
+        </section>
+      )}
 
       <div class="rd-directions" role="navigation" aria-label="Research directions">
         <div class="container rd-directions-inner">
@@ -158,3 +184,60 @@ const directions = [
     <script is:inline defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"aa79c36c6ed04e05b5b7e1e19f3b9453"}'></script>
   </body>
 </html>
+
+<style>
+  /* These styles apply when a research page supplies a bannerImage. */
+  .rd-page .rd-hero--banner {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: 570px;
+    padding-block: 26px 64px;
+    background: #061d32;
+  }
+  .rd-banner-image,
+  .rd-banner-shade {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  .rd-banner-image {
+    object-fit: cover;
+    object-position: 60% center;
+  }
+  .rd-banner-shade {
+    background: linear-gradient(90deg, rgba(3, 17, 32, .96) 0%, rgba(3, 17, 32, .90) 30%, rgba(3, 17, 32, .56) 49%, rgba(3, 17, 32, .12) 72%, rgba(3, 17, 32, .06) 100%);
+  }
+  .rd-hero--banner .rd-hero-content { position: relative; z-index: 1; }
+  .rd-page .rd-hero--banner .rd-breadcrumb { margin-bottom: clamp(40px, 4.5vw, 68px); }
+  .rd-page .rd-hero--banner .rd-hero-grid { display: block; }
+  .rd-hero--banner .rd-hero-copy { width: 62%; max-width: 660px; }
+  .rd-page .rd-hero--banner .rd-hero-description { max-width: 47ch; }
+
+  .rd-banner-context { padding-block: 30px; border-bottom: 1px solid #d7e0e5; background: #fff; }
+  .rd-banner-context-inner { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); align-items: center; gap: 56px; }
+  .rd-banner-label { margin: 0 0 10px; font: 700 .6875rem/1.5 Arial, Helvetica, sans-serif; letter-spacing: .16em; color: #a74c37; }
+  .rd-banner-question { max-width: 52ch; color: #102e44; font: 400 1.45rem/1.45 Georgia, 'Times New Roman', serif; }
+  .rd-banner-topics { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 0; padding: 4px 0 4px 30px; border-left: 1px solid #d7e0e5; list-style: none; }
+  .rd-banner-topics li { color: #425967; font-size: .875rem; line-height: 1.65; }
+
+  @media (max-width: 1000px) {
+    .rd-hero--banner .rd-hero-copy { width: 69%; }
+    .rd-banner-shade { background: linear-gradient(90deg, rgba(3, 17, 32, .96) 0%, rgba(3, 17, 32, .90) 40%, rgba(3, 17, 32, .72) 62%, rgba(3, 17, 32, .20) 85%, rgba(3, 17, 32, .14) 100%); }
+    .rd-banner-context-inner { gap: 30px; }
+  }
+  @media (max-width: 760px) {
+    .rd-page .rd-hero--banner { min-height: 0; padding-block: 22px 42px; }
+    .rd-page .rd-hero--banner .rd-breadcrumb { margin-bottom: 38px; }
+    .rd-hero--banner .rd-hero-copy { width: 100%; max-width: 600px; }
+    .rd-banner-image { object-position: 70% center; }
+    .rd-banner-shade { background: linear-gradient(90deg, rgba(3, 17, 32, .94), rgba(3, 17, 32, .77)); }
+    .rd-banner-context { padding-block: 26px; }
+    .rd-banner-context-inner { grid-template-columns: 1fr; gap: 20px; }
+    .rd-banner-question { font-size: 1.25rem; }
+    .rd-banner-topics { border-left: 0; border-top: 1px solid #d7e0e5; padding: 16px 0 0; gap: 8px 18px; }
+    .rd-banner-topics li { font-size: .8125rem; }
+  }
+</style>
