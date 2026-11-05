@@ -124,8 +124,8 @@ const publications = [
         loop
         playsinline
         preload="metadata"
-        width="1280"
-        height="720"
+        width="2560"
+        height="1600"
         aria-label="Structure animation of LIN28 and a small molecule"
         aria-describedby="lin28-structure-caption"
       >
@@ -242,15 +242,16 @@ const publications = [
     margin: 0;
   }
   .lin28-video {
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 9;
-    object-fit: contain;
-    background: #fff;
-    border: 1px solid var(--line, #d7e0e5);
-    border-radius: 4px;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
+  background: #fff;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
   }
   .lin28-figure figcaption {
     display: flex;
