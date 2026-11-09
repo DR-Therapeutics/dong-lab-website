@@ -56,7 +56,7 @@ const pitchPoster = 'assets/pitch-poster.jpg';
         <div class="dr-hero-copy">
           <p class="dr-pill"><span aria-hidden="true"></span> CANCER BIOLOGY · THERAPEUTIC DISCOVERY</p>
           <h1 id="dr-hero-title">Designing a new generation of <span>cancer drugs.</span></h1>
-          <p class="dr-hero-description">We connect cancer biology, AI-guided drug discovery and disease-model testing to develop small molecules against oncogenic proteins.</p>
+          <p class="dr-hero-description">We develop small-molecule approaches to proteins that help cancer cells grow, retain stem-like properties and adapt to treatment. Our TOP2, LIN28 and MSI2 programmes connect cancer biology with AI-guided compound design and experimental testing.</p>
           <div class="dr-hero-actions">
             <a class="dr-button dr-button-primary" href="#approach">Explore our pipeline <span aria-hidden="true">↓</span></a>
             <a class="dr-text-link" href="#partnerships">Partner with us <span aria-hidden="true">→</span></a>
@@ -70,22 +70,56 @@ const pitchPoster = 'assets/pitch-poster.jpg';
       <div class="dr-wrap">
         <div class="dr-section-heading">
           <div><p class="dr-eyebrow">FROM BIOLOGY TO THERAPEUTICS</p><h2 id="dr-pipeline-title">Our discovery <strong class="dr-pipeline-emphasis">Pipeline.</strong></h2></div>
-          <p>From biological insight to therapeutic possibility—three connected steps turn a cancer biology question into a candidate for further development.</p>
+          <p>We start with a mechanism that helps cancer survive, identify compounds that could disrupt it, and test what those compounds actually do. Each round of experiments informs the next round of design.</p>
         </div>
         <ol class="dr-pipeline-grid">
           <li>
             <div class="dr-pipeline-image"><img src={asset('assets/target-discovery.webp')} width="1586" height="992" alt="Conceptual illustration highlighting a coral-colored protein target within a translucent blue cancer cell." loading="lazy" decoding="async"><span aria-hidden="true">01</span></div>
-            <div class="dr-pipeline-copy"><p class="dr-step-label">DISCOVER THE TARGET</p><h3>Drug target discovery</h3><p>Identify proteins and molecular pathways that help cancer cells grow, maintain stem-like properties or adapt to treatment.</p></div>
+            <div class="dr-pipeline-copy">
+              <p class="dr-step-label">DISCOVER THE TARGET</p>
+              <h3>Drug target discovery</h3>
+              <p class="dr-pipeline-description">Identify proteins and pathways that cancer cells depend on, and investigate how those dependencies change during treatment.</p>
+              <ul class="dr-pipeline-points">
+                <li>Connect molecular changes with cancer growth and resistance.</li>
+                <li>Define the protein activity or interaction a drug should disrupt.</li>
+                <li>Select disease models that can test the biological rationale.</li>
+              </ul>
+              <p class="dr-pipeline-output"><span>GOAL</span>A target with a clear, testable role in disease.</p>
+            </div>
           </li>
           <li>
             <div class="dr-pipeline-image"><img src={asset('assets/approach-ai-design.webp')} width="1200" height="675" alt="Conceptual illustration of a laptop displaying a DNA strand beside a molecular structure." loading="lazy" decoding="async"><span aria-hidden="true">02</span></div>
-            <div class="dr-pipeline-copy"><p class="dr-step-label">DESIGN THE COMPOUND</p><h3>AI-guided drug discovery</h3><p>Explore a starting space of more than 1 billion chemicals. Use AI-guided and structure-based methods to prioritize and refine promising small molecules.</p></div>
+            <div class="dr-pipeline-copy">
+              <p class="dr-step-label">DESIGN THE COMPOUND</p>
+              <h3>AI-guided drug discovery</h3>
+              <p class="dr-pipeline-description">Explore a starting chemical space of more than 1 billion compounds. AI-guided and structure-based methods help prioritize promising molecules for experimental testing.</p>
+              <ul class="dr-pipeline-points">
+                <li>Examine how a molecule could fit a target's binding site.</li>
+                <li>Compare candidate structures and guide chemical modifications.</li>
+                <li>Use experimental results to refine the next set of compounds.</li>
+              </ul>
+              <p class="dr-pipeline-output"><span>GOAL</span>Chemical starting points that can be tested and improved.</p>
+            </div>
           </li>
           <li>
             <div class="dr-pipeline-image"><img src={asset('assets/approach-animal-study.webp')} width="1200" height="675" alt="Conceptual illustration of a laboratory mouse and drug vial for preclinical research." loading="lazy" decoding="async"><span aria-hidden="true">03</span></div>
-            <div class="dr-pipeline-copy"><p class="dr-step-label">TEST IN DISEASE MODELS</p><h3>Disease model validation</h3><p>Test candidate compounds in cell and animal disease models to understand their activity, how they work and their potential for further development.</p></div>
+            <div class="dr-pipeline-copy">
+              <p class="dr-step-label">TEST IN DISEASE MODELS</p>
+              <h3>Disease model validation</h3>
+              <p class="dr-pipeline-description">Move from biochemical assays to cell and animal models to investigate activity, mechanism and properties relevant to further development.</p>
+              <ul class="dr-pipeline-points">
+                <li>Test target activity and effects on cancer-cell growth.</li>
+                <li>Evaluate promising compounds in appropriate tumor models.</li>
+                <li>Assess combinations where the biology provides a rationale.</li>
+              </ul>
+              <p class="dr-pipeline-output"><span>GOAL</span>Evidence to decide which candidates should advance.</p>
+            </div>
           </li>
         </ol>
+        <div class="dr-discovery-principle">
+          <p><strong>Computational predictions guide the search. Experiments guide the decisions.</strong></p>
+          <p>A predicted fit is a starting point. We use laboratory evidence to understand whether a compound affects the intended target and produces a meaningful biological effect.</p>
+        </div>
         <p class="dr-image-note">Conceptual research illustrations.</p>
       </div>
     </section>
@@ -94,7 +128,7 @@ const pitchPoster = 'assets/pitch-poster.jpg';
       <div class="dr-wrap">
         <div class="dr-section-heading">
           <div><p class="dr-eyebrow">OUR RESEARCH TARGETS</p><h2 id="dr-targets-title">Three targets.<br>A shared therapeutic ambition.</h2></div>
-          <p>We investigate complementary ways to interfere with cancer growth, stemness and adaptation to treatment.</p>
+          <p>TOP2 acts on DNA, while LIN28 and MSI2 regulate RNA. Together, these programmes investigate different molecular dependencies that can support cancer growth and treatment resistance.</p>
         </div>
         <div class="dr-target-grid">
           <article class="dr-target-card" aria-labelledby="top2-title">
@@ -102,24 +136,56 @@ const pitchPoster = 'assets/pitch-poster.jpg';
               <div class="dr-structure-placeholder" data-structure-placeholder><span class="dr-film-label">MOLECULAR STRUCTURE</span><span class="dr-target-symbol" aria-hidden="true">TOP2</span><span class="dr-film-status" data-structure-status>Structure video coming soon</span></div>
               <video data-structure-video="top2" data-src={targetVideos.top2 ? asset(targetVideos.top2) : undefined} autoplay muted loop playsinline preload="none" hidden aria-label="TOP2 molecular structure video"></video>
             </div>
-            <div class="dr-target-copy"><p class="dr-target-family">DNA TOPOISOMERASE</p><h3 id="top2-title">TOP2</h3><p class="dr-target-focus">Targeting cancer growth.</p><p class="dr-target-description">TOP2 helps cells untangle DNA during cell division. We are developing small molecules that interfere with TOP2 activity to inhibit cancer cell growth.</p><a class="dr-research-link" href="https://doi.org/10.3389/fonc.2020.633142" target="_blank" rel="noopener noreferrer">Research background <span aria-hidden="true">↗</span></a></div>
+            <div class="dr-target-copy">
+              <p class="dr-target-family">DNA TOPOISOMERASE</p>
+              <h3 id="top2-title">TOP2</h3>
+              <p class="dr-target-focus">Targeting cancer growth.</p>
+              <p class="dr-target-description">TOP2 manages DNA tangles and helps separate chromosomes during cell division. Interfering with this activity offers a way to restrict cancer-cell proliferation.</p>
+              <dl class="dr-target-details">
+                <div><dt>Our approach</dt><dd>Develop catalytic inhibitors that disrupt TOP2–DNA interactions. The aim is to block enzyme activity before DNA-cleavage complexes form.</dd></div>
+                <div><dt>Research foundation</dt><dd>Our published T60 study reported inhibition of cancer-cell proliferation and xenograft growth, supporting further investigation of this compound series.</dd></div>
+                <div><dt>Development focus</dt><dd>Refine compound activity and properties, and identify tumor settings and combinations suited to this mechanism.</dd></div>
+              </dl>
+              <a class="dr-research-link" href="https://doi.org/10.3389/fonc.2020.633142" target="_blank" rel="noopener noreferrer">Research background <span aria-hidden="true">↗</span></a>
+            </div>
           </article>
           <article class="dr-target-card dr-target-lin28" aria-labelledby="lin28-title">
             <div class="dr-target-media" data-target-panel>
               <div class="dr-structure-placeholder" data-structure-placeholder><span class="dr-film-label">MOLECULAR STRUCTURE</span><span class="dr-target-symbol" aria-hidden="true">LIN28</span><span class="dr-film-status" data-structure-status>Structure video coming soon</span></div>
               <video data-structure-video="lin28" data-src={targetVideos.lin28 ? asset(targetVideos.lin28) : undefined} autoplay muted loop playsinline preload="none" hidden aria-label="LIN28 molecular structure video"></video>
             </div>
-            <div class="dr-target-copy"><p class="dr-target-family">RNA-BINDING PROTEIN</p><h3 id="lin28-title">LIN28</h3><p class="dr-target-focus">Targeting cancer stemness and translation reprogramming.</p><p class="dr-target-description">LIN28 regulates RNA programs linked to stem-like cancer cells and changes in protein production. We aim to disrupt these programs by blocking LIN28–RNA interactions.</p><a class="dr-research-link" href="https://doi.org/10.1038/s41420-024-02281-z" target="_blank" rel="noopener noreferrer">Research background <span aria-hidden="true">↗</span></a></div>
+            <div class="dr-target-copy">
+              <p class="dr-target-family">RNA-BINDING PROTEIN</p>
+              <h3 id="lin28-title">LIN28</h3>
+              <p class="dr-target-focus">Targeting cancer stemness and translation reprogramming.</p>
+              <p class="dr-target-description">LIN28 regulates RNA programmes linked to stem-like cancer cells and changes in protein production. These programmes can influence how cancer cells grow and respond to stress.</p>
+              <dl class="dr-target-details">
+                <div><dt>Our approach</dt><dd>Design small molecules that disrupt LIN28–RNA interactions, then test their effects on target activity and cancer-cell behaviour.</dd></div>
+                <div><dt>Research foundation</dt><dd>Our Ln268 study reported inhibition of LIN28–RNA binding, reduced cancer-cell and spheroid growth, and combination activity with selected drugs in laboratory models.</dd></div>
+                <div><dt>Development focus</dt><dd>Identify responsive tumor contexts and investigate combinations supported by the target's biology.</dd></div>
+              </dl>
+              <a class="dr-research-link" href="https://doi.org/10.1038/s41420-024-02281-z" target="_blank" rel="noopener noreferrer">Research background <span aria-hidden="true">↗</span></a>
+            </div>
           </article>
           <article class="dr-target-card dr-target-msi2" aria-labelledby="msi2-title">
             <div class="dr-target-media" data-target-panel>
               <div class="dr-structure-placeholder" data-structure-placeholder><span class="dr-film-label">MOLECULAR STRUCTURE</span><span class="dr-target-symbol" aria-hidden="true">MSI2</span><span class="dr-film-status" data-structure-status>Structure video coming soon</span></div>
               <video data-structure-video="msi2" data-src={targetVideos.msi2 ? asset(targetVideos.msi2) : undefined} autoplay muted loop playsinline preload="none" hidden aria-label="MSI2 molecular structure video"></video>
             </div>
-            <div class="dr-target-copy"><p class="dr-target-family">RNA-BINDING PROTEIN</p><h3 id="msi2-title">MSI2</h3><p class="dr-target-focus">Targeting cancer survival and treatment adaptation.</p><p class="dr-target-description">MSI2 regulates RNA messages involved in cancer cell growth. We are investigating whether blocking it can weaken cell survival and limit adaptation to treatment.</p></div>
+            <div class="dr-target-copy">
+              <p class="dr-target-family">RNA-BINDING PROTEIN</p>
+              <h3 id="msi2-title">MSI2</h3>
+              <p class="dr-target-focus">Targeting cancer survival and treatment adaptation.</p>
+              <p class="dr-target-description">MSI2 binds to RNA messages and influences how they are maintained and used to produce proteins. We study its role in the regulatory programmes that support cancer-cell growth.</p>
+              <dl class="dr-target-details">
+                <div><dt>Our approach</dt><dd>Investigate whether disrupting MSI2-dependent RNA regulation can weaken cancer-cell survival and limit adaptation to treatment.</dd></div>
+                <div><dt>Research question</dt><dd>Which tumor states depend on MSI2, and how does that dependency change when cancer cells are exposed to treatment?</dd></div>
+                <div><dt>Development focus</dt><dd>Connect target biology with compound testing to establish how effects on MSI2 relate to changes in cancer cells.</dd></div>
+              </dl>
+            </div>
           </article>
         </div>
-        <p class="dr-target-note">Research and preclinical development.</p>
+        <p class="dr-target-note">Research and preclinical development. The programmes are at different stages; the findings described above come from experimental models.</p>
       </div>
     </section>
 
@@ -159,17 +225,44 @@ const pitchPoster = 'assets/pitch-poster.jpg';
       </div>
     </section>
 
+    <section class="dr-section dr-development" id="development" aria-labelledby="dr-development-title">
+      <div class="dr-wrap">
+        <div class="dr-section-heading">
+          <div><p class="dr-eyebrow">DEVELOPMENT PRIORITIES</p><h2 id="dr-development-title">Building the evidence<br>for a drug candidate.</h2></div>
+          <p>Promising activity is one part of the picture. Our development priorities connect mechanism, compound properties and disease relevance.</p>
+        </div>
+        <div class="dr-development-grid">
+          <article>
+            <p class="dr-development-number" aria-hidden="true">01</p>
+            <h3>Mechanism &amp; selectivity</h3>
+            <p>Establish how a compound affects its intended target and distinguish that effect from broader cellular stress. Connect biochemical findings with target-dependent responses in cancer cells.</p>
+          </article>
+          <article>
+            <p class="dr-development-number" aria-hidden="true">02</p>
+            <h3>Activity &amp; compound properties</h3>
+            <p>Assess activity alongside solubility, stability, exposure and tolerability in appropriate preclinical studies. Use these results to guide compound optimization and candidate selection.</p>
+          </article>
+          <article>
+            <p class="dr-development-number" aria-hidden="true">03</p>
+            <h3>Disease context &amp; combinations</h3>
+            <p>Identify tumor settings in which the target matters most. Test biologically justified combinations and define the next studies needed to support further development.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section class="dr-section dr-partnerships" id="partnerships" aria-labelledby="dr-partnerships-title">
       <div class="dr-wrap dr-partnership-invite">
         <p class="dr-eyebrow">LET’S ADVANCE THE SCIENCE TOGETHER</p>
         <h2 id="dr-partnerships-title">Partnership Opportunities</h2>
-        <p class="dr-partnership-copy">We are seeking strategic partners to co-develop our lead candidates, explore licensing opportunities for specific combination programs, and collaborate on integrating our compounds with targeted therapies.</p>
+        <p class="dr-partnership-copy">We are seeking strategic partners to advance our lead candidates through co-development, explore licensing opportunities for specific combination programmes, and investigate how our compounds could complement targeted therapies.</p>
+        <p class="dr-partnership-extra">We welcome conversations with biotechnology and pharmaceutical teams whose expertise in medicinal chemistry, preclinical development or combination strategies complements our research.</p>
       </div>
     </section>
 
     <section class="dr-section dr-contact-section" id="contact" aria-labelledby="dr-contact-title">
       <div class="dr-wrap dr-contact-grid">
-        <div class="dr-contact-copy"><p class="dr-eyebrow">START A CONVERSATION</p><h2 id="dr-contact-title">Have a shared interest?<br>Let’s connect.</h2><p>Tell us about your interest in co-development, licensing or targeted-therapy collaboration. We would like to hear from you.</p></div>
+        <div class="dr-contact-copy"><p class="dr-eyebrow">START A CONVERSATION</p><h2 id="dr-contact-title">Have a shared interest?<br>Let’s connect.</h2><p>Tell us which programme interests you—TOP2, LIN28 or MSI2—and whether you are exploring co-development, licensing or a combination study. We would be glad to discuss the science and potential next steps.</p></div>
         <div class="dr-contact-details">
           <address><span class="dr-contact-name">Dr. Xuesen Dong</span><span class="dr-contact-email">xdong@<wbr>prostatecentre.com</span></address>
           <a class="dr-button dr-button-white" href="mailto:xdong@prostatecentre.com?subject=Venture%20opportunity%20%E2%80%94%20Enquiry">Email our team <span aria-hidden="true">↗</span></a>
@@ -382,5 +475,95 @@ const pitchPoster = 'assets/pitch-poster.jpg';
 
   @media (max-width: 760px) {
     .dr-pitch-frame { border-radius: 12px; }
+  }
+
+  /* Additional content styles; the existing venture stylesheet remains in use. */
+  .dr-page .dr-pipeline-description {
+    margin-top: 16px;
+    color: var(--dr-copy, #526176);
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  .dr-pipeline-points {
+    display: grid;
+    gap: 10px;
+    margin: 20px 0 0;
+    padding-left: 20px;
+    color: var(--dr-copy, #526176);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .dr-pipeline-points li::marker { color: var(--dr-blue, #3354cf); }
+
+  .dr-page .dr-pipeline-copy .dr-pipeline-output {
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid var(--dr-line, #dce3ed);
+    color: var(--dr-ink, #13243d);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .dr-pipeline-output span {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--dr-blue, #3354cf);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .12em;
+  }
+
+  .dr-discovery-principle {
+    display: grid;
+    grid-template-columns: .85fr 1.15fr;
+    gap: 42px;
+    margin-top: 48px;
+    padding: 30px 32px;
+    border-left: 3px solid var(--dr-blue, #3354cf);
+    border-radius: 0 12px 12px 0;
+    background: #f3f6fc;
+  }
+
+  .dr-discovery-principle p { font-size: 16px; line-height: 1.75; }
+  .dr-discovery-principle p:first-child { color: var(--dr-ink, #13243d); }
+  .dr-discovery-principle p:last-child { color: var(--dr-copy, #526176); }
+
+  .dr-page .dr-target-details {
+    display: grid;
+    gap: 19px;
+    margin-top: 24px;
+    padding-top: 23px;
+    border-top: 1px solid #dce3ed;
+  }
+
+  .dr-target-details dt {
+    margin-bottom: 7px;
+    color: #203b64;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+
+  .dr-target-details dd { color: var(--dr-copy, #526176); font-size: 15px; line-height: 1.8; }
+  .dr-development { background: #f5f7fc; }
+  .dr-development-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px; }
+  .dr-development-grid article { min-width: 0; padding-top: 24px; border-top: 1px solid #b8c6e0; }
+  .dr-development-number { color: var(--dr-blue, #3354cf); font-size: 12px; font-weight: 700; letter-spacing: .08em; }
+  .dr-page .dr-development-grid h3 { margin-top: 22px; font-size: 23px; line-height: 1.3; }
+  .dr-page .dr-development-grid article > p:last-child { margin-top: 16px; color: var(--dr-copy, #526176); font-size: 16px; line-height: 1.8; }
+  .dr-page .dr-partnership-extra { max-width: 750px; margin: 22px auto 0; color: var(--dr-copy, #526176); font-size: 16px; line-height: 1.8; }
+
+  @media (max-width: 960px) {
+    .dr-development-grid { gap: 24px; }
+    .dr-page .dr-development-grid h3 { font-size: 21px; }
+  }
+
+  @media (max-width: 760px) {
+    .dr-discovery-principle { grid-template-columns: 1fr; gap: 15px; margin-top: 36px; padding: 24px; }
+    .dr-development-grid { grid-template-columns: 1fr; gap: 30px; }
+    .dr-page .dr-development-grid h3 { margin-top: 16px; font-size: 24px; }
+    .dr-page .dr-target-details { margin-top: 22px; }
   }
 </style>
