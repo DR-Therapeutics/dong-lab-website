@@ -4,6 +4,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
 const asset = (path: string) => base + 'venture/' + path.replace(/^\//, '');
 const canonical = new URL(base + 'venture/', Astro.site || Astro.url.origin).href;
 
+// Logo file: public/venture/assets/dr-therapeutics-logo.png
+const ventureLogo = 'assets/dr-therapeutics-logo.png';
+
 // Add each video after uploading it to public/venture/assets/.
 // Leave an empty string to display the "coming soon" panel.
 const targetVideos = {
@@ -39,7 +42,9 @@ const pitchPoster = 'assets/pitch-poster.jpg';
   <a class="dr-skip" href="#main">Skip to content</a>
   <header class="dr-header">
     <div class="dr-wrap dr-header-inner">
-      <a class="dr-wordmark" href="#top" aria-label="Venture opportunity — home">Venture opportunity<span class="dr-wordmark-dot" aria-hidden="true">.</span></a>
+      <a class="dr-brand" href="#top" aria-label="D&R Therapeutics — home">
+        <img class="dr-brand-logo" src={asset(ventureLogo)} alt="D&R Therapeutics" width="2172" height="724" decoding="async" />
+      </a>
       <nav class="dr-nav" aria-label="Main navigation">
         <a class="dr-return-link" href="https://dong-lab.ca/">Dong Lab</a>
         <a class="dr-header-contact" href="#contact">Contact <span aria-hidden="true">↗</span></a>
@@ -271,7 +276,7 @@ const pitchPoster = 'assets/pitch-poster.jpg';
       </div>
     </section>
   </main>
-  <footer class="dr-footer"><div class="dr-wrap dr-footer-inner"><a class="dr-wordmark" href="#top">Venture opportunity<span class="dr-wordmark-dot" aria-hidden="true">.</span></a><p>© <span data-dr-year>2026</span> Dong Lab<br><span>Cancer research. Therapeutic discovery.</span></p><a class="dr-back-top" href="#top">Back to top <span aria-hidden="true">↑</span></a></div></footer>
+  <footer class="dr-footer"><div class="dr-wrap dr-footer-inner"><a class="dr-brand" href="#top" aria-label="D&R Therapeutics — back to top"><img class="dr-brand-logo" src={asset(ventureLogo)} alt="D&R Therapeutics" width="2172" height="724" loading="lazy" decoding="async" /></a><p>© <span data-dr-year>2026</span> Dong Lab<br><span>Cancer research. Therapeutic discovery.</span></p><a class="dr-back-top" href="#top">Back to top <span aria-hidden="true">↑</span></a></div></footer>
   <!-- This replaces the older external script so both loaders do not run. -->
   <script is:inline>
 (() => {
@@ -407,6 +412,38 @@ const pitchPoster = 'assets/pitch-poster.jpg';
 </html>
 
 <style>
+  /* D&R branding. The existing venture navigation remains in place. */
+  .dr-page .dr-brand {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    width: 246px;
+    max-width: 100%;
+    text-decoration: none;
+    line-height: 1;
+  }
+
+  .dr-page .dr-brand:hover { text-decoration: none; }
+
+  .dr-page .dr-brand-logo {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .dr-page .dr-header-inner { padding-block: 8px; }
+  .dr-page .dr-footer .dr-brand { width: 210px; }
+
+  @media (max-width: 760px) {
+    .dr-page .dr-brand { width: 220px; }
+    .dr-page .dr-footer .dr-brand { width: 160px; }
+  }
+
+  @media (max-width: 620px) {
+    .dr-page .dr-header-inner { gap: 6px; padding-block: 8px 12px; }
+  }
+
   .dr-pitch {
     background: #fff;
   }
