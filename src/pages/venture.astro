@@ -6,6 +6,7 @@ const canonical = new URL(base + 'venture/', Astro.site || Astro.url.origin).hre
 
 // Logo file: public/venture/assets/dr-therapeutics-logo.png
 const ventureLogo = 'assets/dr-therapeutics-logo.png';
+const ventureLogoMotion = 'assets/dr-logo-symbol-hover.mp4';
 
 // Add each video after uploading it to public/venture/assets/.
 // Leave an empty string to display the "coming soon" panel.
@@ -42,8 +43,13 @@ const pitchPoster = 'assets/pitch-poster.jpg';
   <a class="dr-skip" href="#main">Skip to content</a>
   <header class="dr-header">
     <div class="dr-wrap dr-header-inner">
-      <a class="dr-brand" href="#top" aria-label="D&R Therapeutics — home">
+      <a class="dr-brand" href="#top" aria-label="D&R Therapeutics — home" data-dr-logo>
         <img class="dr-brand-logo" src={asset(ventureLogo)} alt="D&R Therapeutics" width="2172" height="724" decoding="async" />
+        <img class="dr-brand-symbol" src={asset(ventureLogo)} alt="" aria-hidden="true" width="2172" height="724" decoding="async" />
+        <span class="dr-logo-motion" aria-hidden="true">
+          <video class="dr-logo-source" data-logo-video data-src={asset(ventureLogoMotion)} muted loop playsinline preload="none" tabindex="-1"></video>
+          <canvas class="dr-logo-canvas" data-logo-canvas width="368" height="210"></canvas>
+        </span>
       </a>
       <nav class="dr-nav" aria-label="Main navigation">
         <a class="dr-return-link" href="https://dong-lab.ca/">Dong Lab</a>
@@ -276,7 +282,144 @@ const pitchPoster = 'assets/pitch-poster.jpg';
       </div>
     </section>
   </main>
-  <footer class="dr-footer"><div class="dr-wrap dr-footer-inner"><a class="dr-brand" href="#top" aria-label="D&R Therapeutics — back to top"><img class="dr-brand-logo" src={asset(ventureLogo)} alt="D&R Therapeutics" width="2172" height="724" loading="lazy" decoding="async" /></a><p>© <span data-dr-year>2026</span> Dong Lab<br><span>Cancer research. Therapeutic discovery.</span></p><a class="dr-back-top" href="#top">Back to top <span aria-hidden="true">↑</span></a></div></footer>
+  <footer class="dr-footer">
+    <div class="dr-wrap dr-footer-inner">
+      <a class="dr-brand" href="#top" aria-label="D&R Therapeutics — back to top" data-dr-logo>
+        <img class="dr-brand-logo" src={asset(ventureLogo)} alt="D&R Therapeutics" width="2172" height="724" loading="lazy" decoding="async" />
+        <img class="dr-brand-symbol" src={asset(ventureLogo)} alt="" aria-hidden="true" width="2172" height="724" loading="lazy" decoding="async" />
+        <span class="dr-logo-motion" aria-hidden="true">
+          <video class="dr-logo-source" data-logo-video data-src={asset(ventureLogoMotion)} muted loop playsinline preload="none" tabindex="-1"></video>
+          <canvas class="dr-logo-canvas" data-logo-canvas width="368" height="210"></canvas>
+        </span>
+      </a>
+      <p>© <span data-dr-year>2026</span> Dong Lab<br><span>Cancer research. Therapeutic discovery.</span></p>
+      <a class="dr-back-top" href="#top">Back to top <span aria-hidden="true">↑</span></a>
+    </div>
+  </footer>
+  <script is:inline>
+(() => {
+  const hoverDevice = matchMedia('(min-width: 761px) and (hover: hover) and (pointer: fine)');
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+
+  document.querySelectorAll('[data-dr-logo]').forEach(brand => {
+    const video = brand.querySelector('[data-logo-video]');
+    const canvas = brand.querySelector('[data-logo-canvas]');
+    if (!(video instanceof HTMLVideoElement) || !(canvas instanceof HTMLCanvasElement)) return;
+    const context = canvas.getContext('2d', { willReadFrequently: true });
+    if (!context || !video.dataset.src) return;
+
+    let pointerInside = false;
+    let keyboardFocus = false;
+    let active = false;
+    let failed = false;
+    let generation = 0;
+    let videoFrame = null;
+    let animationFrame = null;
+    let lastTime = -1;
+
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    video.loop = true;
+    brand.dataset.logoReady = 'true';
+
+    const cancelFrame = () => {
+      if (videoFrame !== null && typeof video.cancelVideoFrameCallback === 'function') {
+        video.cancelVideoFrameCallback(videoFrame);
+      }
+      if (animationFrame !== null) cancelAnimationFrame(animationFrame);
+      videoFrame = null;
+      animationFrame = null;
+    };
+
+    const stop = () => {
+      active = false;
+      generation += 1;
+      cancelFrame();
+      video.pause();
+      brand.dataset.logoPlaying = 'false';
+    };
+
+    const draw = () => {
+      if (video.readyState < 2 || video.currentTime === lastTime) return;
+      lastTime = video.currentTime;
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const frame = context.getImageData(0, 0, canvas.width, canvas.height);
+      const pixels = frame.data;
+      // The reference has a neutral grey backdrop. Keep its coloured symbol
+      // and make the neutral pixels transparent so no video rectangle appears.
+      for (let i = 0; i < pixels.length; i += 4) {
+        const high = Math.max(pixels[i], pixels[i + 1], pixels[i + 2]);
+        const low = Math.min(pixels[i], pixels[i + 1], pixels[i + 2]);
+        const opacity = Math.max(0, Math.min(1, (high - low - 18) / 28));
+        pixels[i + 3] = Math.round(opacity * 255);
+      }
+      context.putImageData(frame, 0, 0);
+      brand.dataset.logoPlaying = 'true';
+    };
+
+    const schedule = token => {
+      if (!active || token !== generation) return;
+      const next = () => {
+        videoFrame = null;
+        animationFrame = null;
+        if (!active || token !== generation) return;
+        try { draw(); } catch { failed = true; stop(); return; }
+        schedule(token);
+      };
+      if (typeof video.requestVideoFrameCallback === 'function') {
+        videoFrame = video.requestVideoFrameCallback(next);
+      } else {
+        animationFrame = requestAnimationFrame(next);
+      }
+    };
+
+    const start = () => {
+      if (active || failed) return;
+      active = true;
+      const token = ++generation;
+      lastTime = -1;
+      if (!video.getAttribute('src')) {
+        video.src = video.dataset.src;
+        video.load();
+      }
+      // Each new hover starts the six-second animation from its beginning.
+      try { video.currentTime = 0; } catch { /* Wait for the initial media load. */ }
+      video.play().then(() => {
+        if (!active || token !== generation) {
+          if (!active) video.pause();
+          return;
+        }
+        schedule(token);
+      }).catch(() => {
+        if (token === generation) stop();
+      });
+    };
+
+    const update = () => {
+      if (hoverDevice.matches && !reduceMotion.matches && !document.hidden &&
+          (pointerInside || keyboardFocus)) start();
+      else stop();
+    };
+
+    brand.addEventListener('pointerenter', event => {
+      pointerInside = event.pointerType === 'mouse' || event.pointerType === 'pen';
+      update();
+    });
+    brand.addEventListener('pointerleave', () => { pointerInside = false; update(); });
+    brand.addEventListener('pointercancel', () => { pointerInside = false; update(); });
+    brand.addEventListener('focusin', () => {
+      requestAnimationFrame(() => { keyboardFocus = brand.matches(':focus-visible'); update(); });
+    });
+    brand.addEventListener('keydown', () => { keyboardFocus = true; update(); });
+    brand.addEventListener('focusout', () => { keyboardFocus = false; update(); });
+    video.addEventListener('error', () => { failed = true; stop(); });
+    hoverDevice.addEventListener('change', update);
+    reduceMotion.addEventListener('change', update);
+    document.addEventListener('visibilitychange', update);
+  });
+})();
+  </script>
   <!-- This replaces the older external script so both loaders do not run. -->
   <script is:inline>
 (() => {
@@ -414,6 +557,7 @@ const pitchPoster = 'assets/pitch-poster.jpg';
 <style>
   /* D&R branding. The existing venture navigation remains in place. */
   .dr-page .dr-brand {
+    position: relative;
     display: inline-flex;
     align-items: center;
     flex-shrink: 0;
@@ -430,6 +574,50 @@ const pitchPoster = 'assets/pitch-poster.jpg';
     width: 100%;
     height: auto;
     object-fit: contain;
+  }
+
+  .dr-page .dr-brand[data-logo-ready="true"] .dr-brand-logo {
+    clip-path: inset(0 0 0 46%);
+  }
+
+  .dr-page .dr-brand-symbol {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: auto;
+    clip-path: inset(0 54% 0 0);
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 160ms ease;
+  }
+
+  .dr-logo-motion {
+    position: absolute;
+    left: 3.2%;
+    top: 0;
+    width: 43%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 160ms ease;
+  }
+
+  .dr-logo-source {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .dr-logo-canvas { display: block; width: 100%; height: 100%; object-fit: contain; }
+  .dr-brand[data-logo-playing="true"] .dr-brand-symbol { opacity: 0; }
+  .dr-brand[data-logo-playing="true"] .dr-logo-motion { opacity: 1; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dr-page .dr-brand-symbol { opacity: 1 !important; transition: none; }
+    .dr-page .dr-logo-motion { opacity: 0 !important; transition: none; }
   }
 
   .dr-page .dr-header-inner { padding-block: 8px; }
