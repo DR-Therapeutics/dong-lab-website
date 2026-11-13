@@ -45,10 +45,9 @@ const pitchPoster = 'assets/pitch-poster.jpg';
     <div class="dr-wrap dr-header-inner">
       <a class="dr-brand" href="#top" aria-label="D&R Therapeutics — home" data-dr-logo>
         <img class="dr-brand-logo" src={asset(ventureLogo)} alt="D&R Therapeutics" width="2172" height="724" decoding="async" />
-        <img class="dr-brand-symbol" src={asset(ventureLogo)} alt="" aria-hidden="true" width="2172" height="724" decoding="async" />
+        <video class="dr-logo-source" data-logo-video data-src={asset(ventureLogoMotion)} muted loop playsinline preload="none" tabindex="-1" aria-hidden="true"></video>
         <span class="dr-logo-motion" aria-hidden="true">
-          <video class="dr-logo-source" data-logo-video data-src={asset(ventureLogoMotion)} muted loop playsinline preload="none" tabindex="-1"></video>
-          <canvas class="dr-logo-canvas" data-logo-canvas width="368" height="210"></canvas>
+          <canvas class="dr-logo-canvas" data-logo-canvas width="1086" height="362"></canvas>
         </span>
       </a>
       <nav class="dr-nav" aria-label="Main navigation">
@@ -286,10 +285,9 @@ const pitchPoster = 'assets/pitch-poster.jpg';
     <div class="dr-wrap dr-footer-inner">
       <a class="dr-brand" href="#top" aria-label="D&R Therapeutics — back to top" data-dr-logo>
         <img class="dr-brand-logo" src={asset(ventureLogo)} alt="D&R Therapeutics" width="2172" height="724" loading="lazy" decoding="async" />
-        <img class="dr-brand-symbol" src={asset(ventureLogo)} alt="" aria-hidden="true" width="2172" height="724" loading="lazy" decoding="async" />
+        <video class="dr-logo-source" data-logo-video data-src={asset(ventureLogoMotion)} muted loop playsinline preload="none" tabindex="-1" aria-hidden="true"></video>
         <span class="dr-logo-motion" aria-hidden="true">
-          <video class="dr-logo-source" data-logo-video data-src={asset(ventureLogoMotion)} muted loop playsinline preload="none" tabindex="-1"></video>
-          <canvas class="dr-logo-canvas" data-logo-canvas width="368" height="210"></canvas>
+          <canvas class="dr-logo-canvas" data-logo-canvas width="1086" height="362"></canvas>
         </span>
       </a>
       <p>© <span data-dr-year>2026</span> Dong Lab<br><span>Cancer research. Therapeutic discovery.</span></p>
@@ -302,11 +300,24 @@ const pitchPoster = 'assets/pitch-poster.jpg';
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
   document.querySelectorAll('[data-dr-logo]').forEach(brand => {
+    const still = brand.querySelector('.dr-brand-logo');
     const video = brand.querySelector('[data-logo-video]');
     const canvas = brand.querySelector('[data-logo-canvas]');
-    if (!(video instanceof HTMLVideoElement) || !(canvas instanceof HTMLCanvasElement)) return;
-    const context = canvas.getContext('2d', { willReadFrequently: true });
-    if (!context || !video.dataset.src) return;
+    if (!(still instanceof HTMLImageElement) || !(video instanceof HTMLVideoElement) ||
+        !(canvas instanceof HTMLCanvasElement)) return;
+    const context = canvas.getContext('2d');
+    const symbol = document.createElement('canvas');
+    symbol.width = 368;
+    symbol.height = 210;
+    const symbolContext = symbol.getContext('2d', { willReadFrequently: true });
+    if (!context || !symbolContext || !video.dataset.src) return;
+
+    // Use the same 3:1 coordinate system as the complete still logo.
+    // The visible symbol, rather than the video's padded rectangle, sets its scale.
+    const scale = canvas.width / 2172;
+    const symbolScale = 846 / 344;
+    const symbolX = 126 - 16 * symbolScale;
+    const symbolY = 139 + (455 - 181 * symbolScale) / 2 - 17 * symbolScale;
 
     let pointerInside = false;
     let keyboardFocus = false;
@@ -321,7 +332,6 @@ const pitchPoster = 'assets/pitch-poster.jpg';
     video.defaultMuted = true;
     video.playsInline = true;
     video.loop = true;
-    brand.dataset.logoReady = 'true';
 
     const cancelFrame = () => {
       if (videoFrame !== null && typeof video.cancelVideoFrameCallback === 'function') {
@@ -341,10 +351,11 @@ const pitchPoster = 'assets/pitch-poster.jpg';
     };
 
     const draw = () => {
-      if (video.readyState < 2 || video.currentTime === lastTime) return;
-      lastTime = video.currentTime;
-      context.drawImage(video, 0, 0, canvas.width, canvas.height);
-      const frame = context.getImageData(0, 0, canvas.width, canvas.height);
+      if (!still.complete || !still.naturalWidth || video.readyState < 2 ||
+          video.currentTime === lastTime) return;
+      symbolContext.clearRect(0, 0, symbol.width, symbol.height);
+      symbolContext.drawImage(video, 0, 0, symbol.width, symbol.height);
+      const frame = symbolContext.getImageData(0, 0, symbol.width, symbol.height);
       const pixels = frame.data;
       // The reference has a neutral grey backdrop. Keep its coloured symbol
       // and make the neutral pixels transparent so no video rectangle appears.
@@ -354,7 +365,16 @@ const pitchPoster = 'assets/pitch-poster.jpg';
         const opacity = Math.max(0, Math.min(1, (high - low - 18) / 28));
         pixels[i + 3] = Math.round(opacity * 255);
       }
-      context.putImageData(frame, 0, 0);
+      symbolContext.putImageData(frame, 0, 0);
+
+      // Compose one complete animated logo: only the lettering from the PNG,
+      // plus the moving symbol. No static symbol remains beneath the video.
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.drawImage(still, 1000, 0, 1172, 724,
+        1000 * scale, 0, 1172 * scale, 724 * scale);
+      context.drawImage(symbol, symbolX * scale, symbolY * scale,
+        symbol.width * symbolScale * scale, symbol.height * symbolScale * scale);
+      lastTime = video.currentTime;
       brand.dataset.logoPlaying = 'true';
     };
 
@@ -576,31 +596,14 @@ const pitchPoster = 'assets/pitch-poster.jpg';
     object-fit: contain;
   }
 
-  .dr-page .dr-brand[data-logo-ready="true"] .dr-brand-logo {
-    clip-path: inset(0 0 0 46%);
-  }
-
-  .dr-page .dr-brand-symbol {
+  .dr-page .dr-logo-motion {
     position: absolute;
     inset: 0;
     display: block;
     width: 100%;
-    height: auto;
-    clip-path: inset(0 54% 0 0);
-    pointer-events: none;
-    opacity: 1;
-    transition: opacity 160ms ease;
-  }
-
-  .dr-logo-motion {
-    position: absolute;
-    left: 3.2%;
-    top: 0;
-    width: 43%;
     height: 100%;
     pointer-events: none;
-    opacity: 0;
-    transition: opacity 160ms ease;
+    visibility: hidden;
   }
 
   .dr-logo-source {
@@ -611,13 +614,24 @@ const pitchPoster = 'assets/pitch-poster.jpg';
     pointer-events: none;
   }
 
-  .dr-logo-canvas { display: block; width: 100%; height: 100%; object-fit: contain; }
-  .dr-brand[data-logo-playing="true"] .dr-brand-symbol { opacity: 0; }
-  .dr-brand[data-logo-playing="true"] .dr-logo-motion { opacity: 1; }
+  .dr-page .dr-logo-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  /* Switch both complete logos together, with no overlapping crossfade.
+     Visibility preserves the original image's layout and avoids clip-path seams. */
+  .dr-page .dr-brand[data-logo-playing="true"] .dr-brand-logo { visibility: hidden; }
+  .dr-page .dr-brand[data-logo-playing="true"] .dr-logo-motion { visibility: visible; }
 
   @media (prefers-reduced-motion: reduce) {
-    .dr-page .dr-brand-symbol { opacity: 1 !important; transition: none; }
-    .dr-page .dr-logo-motion { opacity: 0 !important; transition: none; }
+    .dr-page .dr-brand .dr-brand-logo { visibility: visible !important; }
+    .dr-page .dr-brand .dr-logo-motion { visibility: hidden !important; }
   }
 
   .dr-page .dr-header-inner { padding-block: 8px; }
