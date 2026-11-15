@@ -4,8 +4,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
 const asset = (path: string) => base + 'venture/' + path.replace(/^\//, '');
 const canonical = new URL(base + 'venture/', Astro.site || Astro.url.origin).href;
 
-// Logo file: public/venture/assets/dr-therapeutics-logo.png
-const ventureLogo = 'assets/dr-therapeutics-logo.png';
+// Logo file: public/venture/assets/rbp-therapeutics-logo.png
+const ventureLogo = 'assets/rbp-therapeutics-logo.png';
 const ventureLogoMotion = 'assets/dr-logo-symbol-hover.mp4';
 
 // Add each video after uploading it to public/venture/assets/.
@@ -43,8 +43,8 @@ const pitchPoster = 'assets/pitch-poster.jpg';
   <a class="dr-skip" href="#main">Skip to content</a>
   <header class="dr-header">
     <div class="dr-wrap dr-header-inner">
-      <a class="dr-brand" href="#top" aria-label="D&R Therapeutics — home" data-dr-logo>
-        <img class="dr-brand-logo" src={asset(ventureLogo)} alt="D&R Therapeutics" width="2172" height="724" decoding="async" />
+      <a class="dr-brand" href="#top" aria-label="RBP Therapeutics — home" data-dr-logo>
+        <img class="dr-brand-logo" src={asset(ventureLogo)} alt="RBP Therapeutics" width="2172" height="724" decoding="async" />
         <video class="dr-logo-source" data-logo-video data-src={asset(ventureLogoMotion)} muted loop playsinline preload="none" tabindex="-1" aria-hidden="true"></video>
         <span class="dr-logo-motion" aria-hidden="true">
           <canvas class="dr-logo-canvas" data-logo-canvas width="1086" height="362"></canvas>
@@ -283,8 +283,8 @@ const pitchPoster = 'assets/pitch-poster.jpg';
   </main>
   <footer class="dr-footer">
     <div class="dr-wrap dr-footer-inner">
-      <a class="dr-brand" href="#top" aria-label="D&R Therapeutics — back to top" data-dr-logo>
-        <img class="dr-brand-logo" src={asset(ventureLogo)} alt="D&R Therapeutics" width="2172" height="724" loading="lazy" decoding="async" />
+      <a class="dr-brand" href="#top" aria-label="RBP Therapeutics — back to top" data-dr-logo>
+        <img class="dr-brand-logo" src={asset(ventureLogo)} alt="RBP Therapeutics" width="2172" height="724" loading="lazy" decoding="async" />
         <video class="dr-logo-source" data-logo-video data-src={asset(ventureLogoMotion)} muted loop playsinline preload="none" tabindex="-1" aria-hidden="true"></video>
         <span class="dr-logo-motion" aria-hidden="true">
           <canvas class="dr-logo-canvas" data-logo-canvas width="1086" height="362"></canvas>
@@ -315,9 +315,9 @@ const pitchPoster = 'assets/pitch-poster.jpg';
     // Use the same 3:1 coordinate system as the complete still logo.
     // The visible symbol, rather than the video's padded rectangle, sets its scale.
     const scale = canvas.width / 2172;
-    const symbolScale = 846 / 344;
-    const symbolX = 126 - 16 * symbolScale;
-    const symbolY = 139 + (455 - 181 * symbolScale) / 2 - 17 * symbolScale;
+    const symbolScale = 849 / 344;
+    const symbolX = 124 - 16 * symbolScale;
+    const symbolY = 138 + (459 - 181 * symbolScale) / 2 - 17 * symbolScale;
 
     let pointerInside = false;
     let keyboardFocus = false;
@@ -575,7 +575,7 @@ const pitchPoster = 'assets/pitch-poster.jpg';
 </html>
 
 <style>
-  /* D&R branding. The existing venture navigation remains in place. */
+  /* RBP branding. The existing venture navigation remains in place. */
   .dr-page .dr-brand {
     position: relative;
     display: inline-flex;
